@@ -7,6 +7,7 @@ for idx in i:
     print(idx)
 
 print(123)
+print(456)
 
 
 ## 잘 해보아요 여러분 ##
