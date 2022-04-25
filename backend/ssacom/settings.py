@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uam(c!4fddpxp*^$iuy332r_4nn950ooxy^@*jqbrtxn**z2*-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -93,7 +93,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ssacom',
-        'USER': 'root',
+        'USER': 'ssacom',
         'PASSWORD': 'tkvlrnal',
         'HOST': 'localhost',
         'PORT': '3306'
