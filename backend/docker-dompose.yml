@@ -1,0 +1,17 @@
+version: "3.1"
+services:
+  db:
+    image: mysql:8.0.22
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: ssacom
+      MYSQL_USER: ssacom
+      MYSQL_PASSWORD: tkvlrnal
+      MYSQL_ROOT_PASSWORD: tkvlrnal
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ../../mysqldata
