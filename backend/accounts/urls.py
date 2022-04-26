@@ -10,7 +10,6 @@ urlpatterns = [
     path('username/', views.takeUsername),
     path('userdelete/<int:user_pk>/',views.userdelete),
     path('userchange/<int:user_pk>/',views.userchange),
-    path('username/<int:user_pk>/', views.takeUser),
+    path('<int:user_pk>/', views.takeUser),
     
-
 ]
