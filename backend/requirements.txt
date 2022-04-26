@@ -1,17 +1,11 @@
 asgiref==3.5.0
-<<<<<<< HEAD
 certifi==2021.10.8
 charset-normalizer==2.0.12
-Django==3.2.13
-django-extensions==3.1.5
 django-cors-headers==3.11.0
-djangorestframework==3.13.1
 djangorestframework-jwt==1.11.0
 idna==3.3
 PyJWT==1.7.1
-pytz==2022.1
 requests==2.27.1
-=======
 cycler==0.11.0
 Cython==0.29.28
 Django==3.2.13
@@ -29,7 +23,6 @@ pyparsing==3.0.8
 python-dateutil==2.8.2
 pytz==2022.1
 six==1.16.0
->>>>>>> d6c377a28f78819c40ca8d49c8eb439dfe540438
 sqlparse==0.4.2
 tzdata==2022.1
 urllib3==1.26.9

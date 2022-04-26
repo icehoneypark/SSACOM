@@ -36,11 +36,8 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
-<<<<<<< HEAD
-=======
 
     # else
->>>>>>> d6c377a28f78819c40ca8d49c8eb439dfe540438
     'rest_framework',
     'django_extensions',
     'django.contrib.admin',
