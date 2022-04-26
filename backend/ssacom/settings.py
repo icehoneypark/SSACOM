@@ -95,7 +95,8 @@ DATABASES = {
         'NAME': 'ssacom',
         'USER': 'ssacom',
         'PASSWORD': 'tkvlrnal',
-        'HOST': 'localhost',
+        # 'HOST': 'localhost',
+        'HOST': '127.0.0.1',
         'PORT': '3306'
     }
 }
