@@ -14,13 +14,14 @@ import axios from 'axios'
 
 export default {
   setup() {
+    // 변수
     const state = reactive({
       shoplist: ["대림 목욕탕", "궁중 목욕탕", "테스트 목욕탕"],
-      asdsad: "test"
     })
-
+    // 라이프 사이클
     onMounted(() => {
       axios.get('url', )
+      .then((res) => state.shoplist = res.data)
     })
 
     return {state}

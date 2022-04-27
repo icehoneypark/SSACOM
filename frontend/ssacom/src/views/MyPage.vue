@@ -58,7 +58,7 @@ export default ({
       phonenumber: '123-456-789',
       address: '황상동 123-2'
     })
-
+    // 유저 데이터 입력
     const onTel = (e) => {
       state.phonenumber = e.target.value
     }
@@ -66,13 +66,15 @@ export default ({
     const onAddress = (e) => {
       state.phonenumber = e.target.value
     }
-
+    // 그 외 함수 부분
     const saveChange = () => {
       axios.post(
         'url',
 
       )
     }
+
+    // 라이프 사이클
     onMounted(() => {
       console.log(state.test)
       axios.get(
