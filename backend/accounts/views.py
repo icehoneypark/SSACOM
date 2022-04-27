@@ -7,7 +7,7 @@ from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer 
 from .models import User
 
-
+# 회원 가입
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
@@ -25,7 +25,7 @@ def signup(request):
         user.set_password(request.data.get('password'))
         user.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
+# 유저 전체 조회
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def takeUsername(request) : 
@@ -33,7 +33,7 @@ def takeUsername(request) :
         user = get_user_model().objects.all()
         serializer = UserSerializer(user, many = True)
         return Response(serializer.data)
-
+# 유저 정보 조회
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def takeUser(request, user_pk) :
@@ -61,7 +61,7 @@ def takeUser(request, user_pk) :
 #         return Response({'Success':False,'error':'비밀번호가 일치하지 않습니다.'},status=status.HTTP_200_OK)
    
 #     return Response({'Success':True,'is_active':user.is_active},status=status.HTTP_200_OK)
-
+# 회원 탈퇴
 @api_view(['DELETE'])
 @permission_classes([AllowAny])
 def userdelete(request,user_pk):
@@ -72,7 +72,7 @@ def userdelete(request,user_pk):
             'delete': f'데이터 {user_pk}번이 삭제되없습니다.',
         }
         return Response(data,status=status.HTTP_204_NO_CONTENT)
-
+# 회원 정보 수정
 @api_view(['PUT'])
 @permission_classes([AllowAny])
 def userchange(request,user_pk):
