@@ -63,6 +63,20 @@ export default {
       if (this.email.trim().length >= 0 && !EmailValidator.validate(this.email))
         this.error.email = true;
       else this.error.email = false;
+
+
+      if (this.password.trim().lenght == 0)
+      this.error.password = true;
+      else this.error.password = false;
+
+      let isCheck = true;
+      Object.values(this.error).map(v => {
+        if(v) isCheck = flase;
+      });
+      this.isCheck = isCheck;
+
+      if (this.isCheck) this.login() ;
+      else this.isAlert = true;
     }
   }
 
