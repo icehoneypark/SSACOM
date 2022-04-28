@@ -19,17 +19,18 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import axios from 'axios';
+import EmailValidator from "email-validator";
+import { assertExpressionStatement } from "@babel/types";
+const baseURL = 'http://localhost:8000/'
 
 export default {
-  name: 'Login',
+  name: 'LoginView',
   data() {
     return {
-      email:'',
-      password:'',
-      error: {
-        email: false,
-        password: false,
+      credentials:{
+        email:'',
+        password:''
       },
       isCheck:false,
       isAlert:false,
@@ -44,39 +45,28 @@ export default {
     }
   },
   methods: {
-    ...mapActions(memberStore, ["memberConfirm", "signInMemberInfo"]),
-    async login() {
-      const memberInfo = {
-        email: this.email,
-        password: this.password,
-      }
-      await this.memberConfirm(memberInfo);
-      let accessToken = localStorage.getItem("accessToken");
-      if (this.isSignin) {
-        await this.signInMemberInfo(accessToken);
-        this.$router.push({name:"home"});  // 일단은 메인화면으로 보내는데, 나중에 대시보드로 돌려놓던가 해야 함
-      }else{
-        this.isAlert = true;
-      }
-    },
-    checkForm() {
-      if (this.email.trim().length >= 0 && !EmailValidator.validate(this.email))
-        this.error.email = true;
-      else this.error.email = false;
-
-
-      if (this.password.trim().lenght == 0)
-      this.error.password = true;
-      else this.error.password = false;
-
-      let isCheck = true;
-      Object.values(this.error).map(v => {
-        if(v) isCheck = flase;
-      });
-      this.isCheck = isCheck;
-
-      if (this.isCheck) this.login() ;
-      else this.isAlert = true;
+    login: function() {
+      axios({
+        method: 'post',
+        url: "accounts/login/", 
+        data: this.credentials
+      })
+      .then(res => {
+        if (res.data.Success){
+          if (res.data.is_active) {
+            this.$store.dispatch('login', this.credentials)
+            this.$emit('login')
+            if(this.$route.path!=='/Home') this.$router.push('/')
+          }else{
+            alert('관리자의 승인을 기다려주세요.')
+          }
+        }else{
+          alert(res.data.error)
+        }
+      })
+      .catch(err => {
+        alert(err.response.data)
+      })
     }
   }
 
