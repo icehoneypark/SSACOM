@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+
+    # else
+    'rest_framework',
     'django_extensions',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -79,10 +82,21 @@ WSGI_APPLICATION = 'ssacom.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ssacom',
+        'USER': 'root',
+        'PASSWORD': 'tkvlrnal',
+        'HOST': 'localhost',
+        'PORT': '3306'
     }
 }
 
@@ -131,3 +145,18 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+import datetime
+
+JWT_AUTH = {
+   'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+}
