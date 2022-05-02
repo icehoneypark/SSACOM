@@ -20,8 +20,6 @@
 
 <script>
 import axios from 'axios';
-import EmailValidator from "email-validator";
-import { assertExpressionStatement } from "@babel/types";
 const baseURL = 'http://localhost:8000/'
 
 export default {
@@ -48,17 +46,17 @@ export default {
     login: function() {
       axios({
         method: 'post',
-        url: "accounts/login/", 
+        url: `${baseURL}accounts/login/`, 
         data: this.credentials
       })
       .then(res => {
         if (res.data.Success){
-          if (res.data.is_active) {
+          if (res.data) {
             this.$store.dispatch('login', this.credentials)
             this.$emit('login')
-            if(this.$route.path!=='/Home') this.$router.push('/')
+            if(this.$route.path!=='/Home') this.$router.push('/') // 나중에 대시보드로 바꿔야지.
           }else{
-            alert('관리자의 승인을 기다려주세요.')
+            alert('등록되지 않은 계정입니다.')
           }
         }else{
           alert(res.data.error)
@@ -67,6 +65,12 @@ export default {
       .catch(err => {
         alert(err.response.data)
       })
+    }
+  },
+  created: function(){
+    const token = localStorage.getItem('jwt')
+    if (token){
+      if (this.$route.path!=='/Home') this.$router.push('/')
     }
   }
 
