@@ -16,7 +16,8 @@
     "vue": "^3.2.13",
     "vue-jwt-decode": "^0.1.0",
     "vue-router": "^4.0.3",
-    "vuex": "^4.0.0"
+    "vuex": "^4.0.0",
+    "email-validator": "^2.0.4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
