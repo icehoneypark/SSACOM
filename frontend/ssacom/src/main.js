@@ -9,12 +9,12 @@ import 'bootstrap-vue-3/dist/bootstrap-vue-3.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import "bootstrap"
 
-// import axios from 'axios'
+import axios from 'axios'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
 
 createApp(App).use(store).use(router).mount('#app')
 App.use(BootstrapVue3)
-
+App.config.globalProperties.$axios = axios
 // App.use(axios)

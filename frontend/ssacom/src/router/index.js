@@ -26,6 +26,11 @@ const routes = [
     component: () => import('../views/NoticeCreate.vue'),
   },
   {
+    path: '/notice/detail/:id',
+    name: 'noticedetail',
+    component: () => import('../views/NoticeDetail.vue'),
+  },
+  {
     path : '/login',
     name : 'login',
     component: () => import('../views/LoginView.vue')

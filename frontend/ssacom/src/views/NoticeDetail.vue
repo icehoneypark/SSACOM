@@ -1,22 +1,14 @@
 <template>
   <div class="notice">
-    <h1>create page</h1>
+    <h1>detail page</h1>
   </div>
   <div>
     <button
     @click="create">작성</button>
   </div>
   <div>
-    <input 
-    type="text"
-    v-model="title"
-    placeholder="제목">
-
-    <textarea
-      type="text"
-      v-model="content"
-      placeholder="내용입력"
-    ></textarea>
+    <p>{{ post.title}}</p>
+    <p>{{ post.content}}</p>
   </div>
 
 
@@ -25,7 +17,7 @@
 
 <script>
 export default {
-  name : 'NoticeCreate',
+  name : 'NoticeDetail',
   data : function() {
     return {
       title : null,

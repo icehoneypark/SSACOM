@@ -21,5 +21,5 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('faq/', include('faq.urls')),
     path('qna/', include('qna.urls')),
-    # path('notices/', include('notices.urls')),
+    path('notices/', include('notices.urls')),
 ]
