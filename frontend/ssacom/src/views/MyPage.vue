@@ -12,7 +12,7 @@
       Launch demo modal
     </button>
 
-    <!-- 개인정보 수정 폼 -->
+    <!-- 개인정보 수정 폼 모달 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -28,7 +28,7 @@
             <input type="text" placeholder="*********" disabled>
             <br>
             <span>Tel: </span>
-            <input type="text" placeholder="전화번호를 입력하세요" @input="onTel()">
+            <input type="text" placeholder="전화번호를 입력하세요" @input="onTel">
             <br>
             <span>Address: </span>
             <input type="text" placeholder="주소를 입력하세요" @input="onAddress">
@@ -47,6 +47,7 @@
 import MyComponent from "../components/MyComponent.vue";
 import axios from 'axios';
 import { onMounted, reactive } from "vue";
+import VueJwtDecode from 'vue-jwt-decode';
 
 
 export default ({
@@ -66,21 +67,30 @@ export default ({
     const onAddress = (e) => {
       state.phonenumber = e.target.value
     }
+
     // 그 외 함수 부분
+
     const saveChange = () => {
-      axios.post(
-        'url',
+      const data = {
+        phonenumber: state.phonenumber,
+        address: state.address,
+      }
+      axios.put(
+        `userchange/${1}`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 store에 저장하거나)
+        data,
 
       )
     }
 
     // 라이프 사이클
     onMounted(() => {
-      console.log(state.test)
-      axios.get(
-        '/accounts/'
-      )
-      .then((res) => state.username = res.data)
+      const hash = localStorage.getItem('jwt');
+      const info = VueJwtDecode["vue-jwt-decode"](hash);
+      console.log(info)
+      // axios.get(
+      //   `/accounts/${1}` // pk 넣기
+      // )
+      // .then((res) => state.username = res.data)
     })
 
     return {state, saveChange, onTel, onAddress}
