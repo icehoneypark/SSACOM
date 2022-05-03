@@ -11,7 +11,7 @@ from .models import User
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-
+    print(request.data)
     password = request.data.get('password')
     password_confirmation = request.data.get('passwordConfirmation')
 		
