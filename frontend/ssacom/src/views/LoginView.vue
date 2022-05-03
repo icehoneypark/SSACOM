@@ -1,18 +1,26 @@
 <template>
-  <h3>loginpage</h3>
+  <h2>로그인</h2>
   <div>
-    <input-group>
-      <input-text>이메일</input-text>
-      <input type="text">
-    </input-group>
+    <div>
+      <label for="username">이름</label>
+      <input type="text"
+        id="username"
+        v-model="content.username"
+      >
+    </div>
   </div>
   <div>
-    <input-group>
-      <input-text>비번</input-text>
-      <input type="text">
-    </input-group>
+    <div>
+      <label for="password">비번</label>
+      <input type="password"
+        id="password"
+        v-model="content.password"
+        @keyup.enter="login"
+        autocomplete="off"
+      >
+    </div>
   </div>
-  <button type="submit" class="btn btn-sm btn-primary m-1">로그인</button>
+  <button class="btn btn-sm btn-primary m-1" @click="login">로그인</button>
 
 
 
@@ -20,23 +28,22 @@
 
 <script>
 import axios from 'axios';
-const baseURL = 'http://localhost:8000/'
+const baseURL = 'http://127.0.0.1:8000/'
 
 export default {
   name: 'LoginView',
   data() {
     return {
-      credentials:{
-        email:'',
+      content:{
+        username:'',
         password:''
       },
       isCheck:false,
       isAlert:false,
 
+
     }
   },
-  components:{},
-  created() {},
   watch : {
     email: function() {
       this.email = this.email.trim().toLowerCase(); //대문자 방지
@@ -46,24 +53,31 @@ export default {
     login: function() {
       axios({
         method: 'post',
-        url: `${baseURL}accounts/login/`, 
-        data: this.credentials
+        url: `${baseURL}accounts/api-token-auth/`, 
+        data: this.content
       })
       .then(res => {
-        if (res.data.Success){
-          if (res.data) {
-            this.$store.dispatch('login', this.credentials)
-            this.$emit('login')
-            if(this.$route.path!=='/Home') this.$router.push('/') // 나중에 대시보드로 바꿔야지.
-          }else{
-            alert('등록되지 않은 계정입니다.')
-          }
-        }else{
-          alert(res.data.error)
-        }
+        console.log(res)
+        localStorage.setItem('jwt', res.data.token)
+        this.$router.push({ name : 'home' })
+        // if (res.data.Success){
+        //   if (res.data) {
+        //     console.log('여기는 then')
+        //     console.log(this.content)
+        //     this.$store.dispatch('login', this.content)
+        //     this.$emit('login')
+        //     if(this.$route.path!=='/Home') this.$router.push('/') // 나중에 대시보드로 바꿔야지.
+        //   }else{
+        //     alert('등록되지 않은 계정입니다.')
+        //   }
+        // }else{
+        //   alert(res.data.error)
+        //   console.log('이거는 어디지')
+        // }
       })
       .catch(err => {
-        alert(err.response.data)
+        alert(err)
+        console.log('여기는 캐치 에러')
       })
     }
   },
