@@ -2,37 +2,24 @@
   <div class="notice">
     <h1>detail page</h1>
   </div>
-  <div>
-    <button
-    @click="create">작성</button>
-  </div>
-  <div>
-    <p>{{ post.title}}</p>
-    <p>{{ post.content}}</p>
-  </div>
-
-
-
+  {{ index }}
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name : 'NoticeDetail',
-  data : function() {
+  data : function () {
     return {
-      title : null,
-      content : null,
+      index: this.$route.params.id
     }
   },
-  methods : {
-    create: function () {
-      const noticeData = {
-        title: this.title,
-        content: this.content,
-      }
-      this.$store.dispatch("createNotice", noticeData),
-      this.$router.push("/notice")
+  computed: {
+    ...mapState(["posts"]),
+    post : function () {
+      return this.posts.find(post => post.id === this.index)
     }
-  }
+  },
 }
 </script>

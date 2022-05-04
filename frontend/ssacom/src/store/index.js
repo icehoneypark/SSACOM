@@ -10,6 +10,8 @@ export default createStore({
   mutations: {
     CREATE_NOTICE: function (state, res) {
       state.posts.push(res)
+      console.log(123)
+      console.log(this.state.posts[0])
     },
   },
   actions: {
