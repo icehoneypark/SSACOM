@@ -9,8 +9,8 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
-import { onMounted } from '@vue/runtime-core'
-import axios from 'axios'
+// import { onMounted } from '@vue/runtime-core'
+// import axios from 'axios'
 
 export default {
   setup() {
@@ -19,10 +19,10 @@ export default {
       shoplist: ["대림 목욕탕", "궁중 목욕탕", "테스트 목욕탕"],
     })
     // 라이프 사이클
-    onMounted(() => {
-      axios.get('url', )
-      .then((res) => state.shoplist = res.data)
-    })
+    // onMounted(() => {
+    //   axios.get('url', )
+    //   .then((res) => state.shoplist = res.data)
+    // })
 
     return {state}
   },

@@ -16,6 +16,7 @@ export default {
     const logout = (e) => {
       e.preventDefault()
       localStorage.removeItem('jwt')
+      alert('로그아웃되었습니다.')
     }
 
     return {logout}

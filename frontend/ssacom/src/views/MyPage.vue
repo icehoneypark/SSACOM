@@ -3,14 +3,14 @@
     <div class="wrapper">
       <img src="../assets/DefaultProfile.png" alt="" width="50" style="border-radius:30px;">
       <span>{{state.username}}님의 마이페이지</span>
-      <button type="button" class="btn btn-primary">edit</button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      개인정보 수정
+    </button>
       <br>
       <p>Tel. {{state.phonenumber}}</p>
     </div>
     <my-component />
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Launch demo modal
-    </button>
+    <button type="button" class="btn btn-danger" @click="userDelete">회원탈퇴</button>
 
     <!-- 개인정보 수정 폼 모달 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -54,10 +54,13 @@ export default ({
   components: {MyComponent},
 
   setup() {
+    const hash = localStorage.getItem('jwt')
+    const info = VueJwtDecode.decode(hash)
+
     const state = reactive({
-      username: '홍길동',
-      phonenumber: '123-456-789',
-      address: '황상동 123-2'
+      username: '',
+      phonenumber: '',
+      address: ''
     })
     // 유저 데이터 입력
     const onTel = (e) => {
@@ -68,32 +71,49 @@ export default ({
       state.phonenumber = e.target.value
     }
 
-    // 그 외 함수 부분
+    // 함수 부분
 
     const saveChange = () => {
       const data = {
         phonenumber: state.phonenumber,
         address: state.address,
       }
-      axios.put(
-        `userchange/${1}`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 store에 저장하거나)
+      axios({
+        method: 'put',
+        url: `userchange/${info.user_id}/`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 store에 저장하거나)
         data,
+      })
+      .then((res) => console.log(res))
+      .catch((res) => console.log(res))
+    }
 
-      )
+    const userDelete = () => {
+      if(confirm('정말 탈퇴하시겠습니까?')){
+        axios({
+          method: 'DELETE',
+          url: `http://localhost:8000/accounts/userdelete/${1}`,
+        })
+      }
     }
 
     // 라이프 사이클
     onMounted(() => {
-      const hash = localStorage.getItem('jwt');
-      const info = VueJwtDecode["vue-jwt-decode"](hash);
-      console.log(info)
-      // axios.get(
-      //   `/accounts/${1}` // pk 넣기
-      // )
-      // .then((res) => state.username = res.data)
+      axios({
+        method: 'get',
+        url: `http://localhost:8000/accounts/${info.user_id}/` // pk 넣기
+      })
+      .then((res) => {
+        console.log(res)
+        state.username = res.data.username
+        state.phonenumber = res.data.phonenumber
+        // state.address = res.data.address
+      })
+      .catch((res) => {
+        console.log(res)
+      })
     })
 
-    return {state, saveChange, onTel, onAddress}
+    return {state, saveChange, onTel, onAddress, userDelete}
   },
 })
 </script>
