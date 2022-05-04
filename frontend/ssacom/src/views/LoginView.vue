@@ -87,8 +87,6 @@ export default {
       if (this.$route.path!=='/Home') this.$router.push('/')
     }
   }
-
-
 }
 </script>
 
