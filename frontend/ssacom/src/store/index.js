@@ -3,7 +3,10 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    posts: []
+    posts: [
+      {title: '1aaa', content: '1bbb'},
+      {title: '2aaa', content: '2bbb'},
+    ]
   },
   getters: {
   },
@@ -11,7 +14,7 @@ export default createStore({
     CREATE_NOTICE: function (state, res) {
       state.posts.push(res)
       console.log(123)
-      console.log(this.state.posts[0])
+      console.log(this.state.posts[2])
     },
   },
   actions: {

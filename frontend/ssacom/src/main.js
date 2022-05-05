@@ -13,8 +13,12 @@ import axios from 'axios'
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import "bootstrap"
+import VueApexCharts from 'vue3-apexcharts'
 
 createApp(App).use(store).use(router).mount('#app')
 App.use(BootstrapVue3)
 App.config.globalProperties.$axios = axios
+
+App.use(VueApexCharts)
+// App.component('apexchart', VueApexCharts)
 // App.use(axios)

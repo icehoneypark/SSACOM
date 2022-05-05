@@ -2,6 +2,7 @@
   <div class="notice">
     <h1>This is an notice page</h1>
     <button @click="create" type="button">글작성</button>
+    <button @click="getpost" type="button">새로고침</button>
   </div>
 
   <div>
@@ -15,11 +16,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr :key="index" v-for="(post, index) in posts" @click="detail(index)">
+        <tr :key="index" v-for="(post, index) in posts" @click="detail(post.id)">
           <td>{{ index }}</td>
           <td>{{ post.title }}</td>
           <td>{{ post.content }}</td>
-          <td>{{ post.created }}</td>
+          <td>{{ post.id }}</td>
         </tr>
       </tbody>
     </table>
@@ -29,11 +30,13 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name : 'NoticeView',
   data : function() {
     return {
-      posts : this.$store.state.posts
+      posts : null
     }
   },
   methods : {
@@ -41,16 +44,30 @@ export default {
       this.$router.push('/notice/create')
     },
     detail : function (index) {
-      console.log(123)
-      console.log(index)
-
       this.$router.push({
-        name: 'NoticeDetail',
+        name: 'noticedetail',
         params: {
-          id: index
+          id: index,
+          test: 'qqq'
         }
       })
     },
+    getpost : function () {
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/notices/',
+      })
+        .then(res => {
+            console.log(res)
+            this.posts = res.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
+    },
+  },
+  created: function () {
+    this.getpost()
   }
 }
 </script>

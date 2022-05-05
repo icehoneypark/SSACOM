@@ -8,6 +8,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: () => import('../views/DashboardView.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
@@ -26,9 +31,14 @@ const routes = [
     component: () => import('../views/NoticeCreate.vue'),
   },
   {
-    path: '/notice/detail/:id',
+    path: '/notice/:id',
     name: 'noticedetail',
     component: () => import('../views/NoticeDetail.vue'),
+  },
+  {
+    path: '/notice/update/:id',
+    name: 'noticeupdate',
+    component: () => import('../views/NoticeUpdate.vue'),
   },
   {
     path : '/login',
