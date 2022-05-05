@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from backend.notices.serializers import noticesSerializer
+from .serializers import noticesSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view

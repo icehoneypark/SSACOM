@@ -2,7 +2,7 @@
   <h2>로그인</h2>
   <div>
     <div>
-      <label for="username">이름</label>
+      <label for="username">아이디</label>
       <input type="text"
         id="username"
         v-model="content.username"
@@ -11,7 +11,7 @@
   </div>
   <div>
     <div>
-      <label for="password">비번</label>
+      <label for="password">비밀번호</label>
       <input type="password"
         id="password"
         v-model="content.password"
@@ -23,7 +23,8 @@
   <button class="btn btn-sm btn-primary m-1" @click="login">로그인</button>
 
 
-
+  <!-- 아이디/비밀번호 찾는 페이지 -->
+  <a href="/findinfo">아이디/비밀번호가 기억나지 않으세요?</a>
 </template>
 
 <script>
@@ -38,10 +39,6 @@ export default {
         username:'',
         password:''
       },
-      isCheck:false,
-      isAlert:false,
-
-
     }
   },
   watch : {
