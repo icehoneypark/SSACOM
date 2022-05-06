@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+    'chat',
 
     # else
+    'channels',
     'rest_framework',
     'django_extensions',
     'django.contrib.admin',
@@ -47,6 +49,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+# Channels 사용하기 위한 설정 추가
+ASGI_APPLICATION = 'ssacom.routing.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
+# 여기까지 (ASGI_APPLICATION, CHANNEL_LAYERS)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
