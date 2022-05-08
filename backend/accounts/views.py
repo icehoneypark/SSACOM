@@ -11,7 +11,6 @@ from .models import User
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-
     password = request.data.get('password')
     password_confirmation = request.data.get('passwordConfirmation')
 		
@@ -38,8 +37,9 @@ def takeUsername(request) :
 @permission_classes([AllowAny])
 def takeUser(request, user_pk) :
     if request.method == 'GET' :
-        user = User.objects.filter(id = user_pk)
-        serializer = UserSerializer(user, many = True)
+        # user = User.objects.filter(id = user_pk)
+        user = get_object_or_404(User, pk=user_pk)
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
 # @api_view(['POST'])

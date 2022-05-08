@@ -56,7 +56,7 @@ export default {
       .then(res => {
         console.log(res)
         localStorage.setItem('jwt', res.data.token)
-        this.$router.push({ name : 'home' })
+        this.$router.push({ name : 'mypage' })
         // if (res.data.Success){
         //   if (res.data) {
         //     console.log('여기는 then')
