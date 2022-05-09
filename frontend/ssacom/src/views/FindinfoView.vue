@@ -1,42 +1,55 @@
 <template>
-  <!-- 아이디 찾을 때 필요한 것 : 이름, 전화번호 -->
-  <h2>아이디 찾기</h2>
-  <div>
-    <div>
-      <label for="name">이름 입력</label>
-      <!-- 이름 어디 쓰는지 알아보고 고칠 것임 -->
-      <input type="text" id="name" v-model="idFinder.name">
-    </div>
-    <div>
-      <label for="phonenumber">전화번호 입력</label>
-      <input type="text" v-model="idFinder.phonenumber">
-    </div>
-    <button class="btn btn-primary m-2" @click="findId">찾기</button>
-  </div>
-  <div v-if="myid">
-    <h5>해당 사용자의 아이디는 {{ myid }} 입니다.</h5>
-  </div>
-  <br>
-  
-  <!-- 비밀번호 찾을 때 필요한 것 : 이름, 아이디, 전화번호, 이메일 -->
-  <!-- 이메일로 임시 비밀번호 날려주기? -->
-  <h2>비밀번호 찾기</h2>
-  <div>
-    <div>
-      <label for="username">아이디</label>
-      <input type="text" id="username">
-    </div>
-    <div>
-      <label for="phonenumber">전화번호</label>
-      <input type="text" id="phonenumber">
-    </div>
-    <div>
-      <label for="email">이메일</label>
-      <input type="text" id="email">
-    </div>
-    <button class="btn btn-primary m-2" @click="findPw">찾기</button>
-  </div>
+  <div class="container-fluid px-5" style="width:30rem">
+    <div class="d-flex justify-content-center">
+      <div class="row">
+        <!-- 아이디 찾을 때 필요한 것 : 이름, 전화번호 -->
+        <h2 class="d-flex justify-content-center my-3">아이디 찾기</h2>
+        <div>
+          <div class="input-group">
+            <span class="input-group-text">이름</span>
+            <!-- <label for="name">이름 입력</label> -->
+            <!-- 이름 어디 쓰는지 알아보고 고칠 것임 -->
+            <input type="text" class="form-control" v-model="idFinder.name">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">전화번호</span>
+            <!-- <label for="phonenumber">전화번호 입력</label> -->
+            <input type="text" class="form-control" v-model="idFinder.phonenumber">
+          </div>
+          <div>
+            <button style="width:100%;" class="btn btn-primary mt-1 mb-3" @click="findId">아이디 찾기</button>
+          </div>
+          
+        </div>
+        <div v-if="myid">
+          <h5>해당 사용자의 아이디는 {{ myid }} 입니다.</h5>
+        </div>
+        <hr>
+        <!-- 비밀번호 찾을 때 필요한 것 : 이름, 아이디, 전화번호, 이메일 -->
+        <!-- 이메일로 임시 비밀번호 날려주기? -->
+        <h2 class="d-flex justify-content-center mt-5 mb-3">비밀번호 찾기</h2>
+        <div>
+          <div class="input-group">
+            <span class="input-group-text">아이디</span>
+            <!-- <label for="username">아이디</label> -->
+            <input type="text" id="username" class="form-control">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">전화번호</span>
+            <!-- <label for="phonenumber">전화번호</label> -->
+            <input type="text" id="phonenumber" class="form-control">
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">이메일</span>
+            <!-- <label for="email">이메일</label> -->
+            <input type="text" id="email" class="form-control">
+          </div>
+          <button style="width:100%" class="btn btn-primary my-1" @click="findPw">비밀번호 찾기</button>
+        </div>
 
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -90,5 +103,9 @@ export default {
 </script>
 
 <style>
+
+span {
+  width: 6rem;
+}
 
 </style>
