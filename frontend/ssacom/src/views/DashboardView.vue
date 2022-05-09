@@ -1,41 +1,14 @@
 <template>
   <h1>여기는 대시보드</h1>
   <p>아래에 컴포넌트들을 만들어주세요 ㅎㅎ</p>
-  <div>
-    <apexchart
-      width="500"
-      type="bar"
-      :options="chartOptions"
-      :series="series"
-    ></apexchart>
-  </div>
+  <day-graph></day-graph>
 </template>
 
 <script>
-import VueApexCharts from "vue3-apexcharts";
-
+import DayGraph from '../components/dashboard/DayGraph.vue'
 export default {
-  components: {
-    apexchart: VueApexCharts,
-  },
-  data: function() {
-    return {
-      chartOptions: {
-        chart: {
-          id: "vuechart-example",
-        },
-        xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998],
-        },
-      },
-      series: [
-        {
-          name: "series-1",
-          data: [30, 40, 35, 50, 49, 60, 70, 91],
-        },
-      ],
-    };
-  },
+  components: { DayGraph },
+  
 }
 </script>
 

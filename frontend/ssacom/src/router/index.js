@@ -41,9 +41,19 @@ const routes = [
     component: () => import('../views/NoticeUpdate.vue'),
   },
   {
+    path: '/mypage',
+    name: 'mypage',
+    component: () => import('../views/MyPage.vue')
+  },
+  {
     path : '/login',
     name : 'login',
     component: () => import('../views/LoginView.vue')
+  },
+  {
+    path : '/signup',
+    name : 'signup',
+    component: () => import('../views/SignUp.vue')
   }
 ]
 
