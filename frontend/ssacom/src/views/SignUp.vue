@@ -61,18 +61,23 @@ export default {
         address: state.address,
         email: state.email,
       }
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/signup/',
-        data: credentials
-      })
-      .then((res) => {
-        console.log(res)
-        router.push({ path: '/login'})
-      })
-      .catch((res) => {
-        console.log(res)
-      })
+      // 조건문 다시작성해야 할듯
+      if (state.username !== '' && state.password !== '' && state.password_confirmation !== '' && state.email !== '' && state.phonenumber !== ''){
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/accounts/signup/',
+          data: credentials
+        })
+        .then((res) => {
+          console.log(res)
+          router.push({ path: '/login'})
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+      } else {
+        alert('작성이 덜 됐습니다')
+      }
     }
 
     return {state, onUsername, onEmail, onPhonenumber, onAddress, onPassword, onPasswordConfirmation, signup}

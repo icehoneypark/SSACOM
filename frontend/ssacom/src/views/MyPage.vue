@@ -9,7 +9,7 @@
       <br>
       <p>Tel. {{state.phonenumber}}</p>
     </div>
-    <my-component />
+    <shop-list />
     <button type="button" class="btn btn-danger" @click="userDelete">회원탈퇴</button>
 
     <!-- 개인정보 수정 폼 모달 -->
@@ -22,7 +22,7 @@
           </div>
           <div class="modal-body">
             <span>ID: </span>
-            <input type="text" placeholder="홍길동" disabled>
+            <input type="text" :placeholder="state.username" disabled>
             <br>
             <span>PW: </span>
             <input type="text" placeholder="*********" disabled>
@@ -44,14 +44,14 @@
 </template>
 
 <script>
-import MyComponent from "../components/MyComponent.vue";
+import ShopList from "../components/ShopList.vue";
 import axios from 'axios';
 import { onMounted, reactive } from "vue";
 import VueJwtDecode from 'vue-jwt-decode';
 
 
 export default ({
-  components: {MyComponent},
+  components: {ShopList},
 
   setup() {
     const hash = localStorage.getItem('jwt')
@@ -80,7 +80,7 @@ export default ({
       }
       axios({
         method: 'put',
-        url: `userchange/${info.user_id}/`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 store에 저장하거나)
+        url: `userchange/${info.user_id}/`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 `store`에 저장하거나)
         data,
       })
       .then((res) => console.log(res))
@@ -91,7 +91,7 @@ export default ({
       if(confirm('정말 탈퇴하시겠습니까?')){
         axios({
           method: 'DELETE',
-          url: `http://localhost:8000/accounts/userdelete/${1}`,
+          url: `http://localhost:8000/accounts/userdelete/${info.user_id}`,
         })
       }
     }
