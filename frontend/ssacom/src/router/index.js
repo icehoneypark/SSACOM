@@ -26,7 +26,6 @@ const routes = [
     component: () => import('../views/LoginView.vue')
   },
   {
-<<<<<<< HEAD
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../views/DashboardView.vue') 
@@ -35,11 +34,11 @@ const routes = [
     path: '/findinfo',
     name: 'findinfo',
     component: () => import('../views/FindinfoView.vue')
-=======
+  },
+  {
     path : '/signup',
     name : 'signup',
     component: () => import('../views/SignUp.vue')
->>>>>>> develop
   }
 ]
 
