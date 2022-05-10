@@ -48,7 +48,7 @@ export default {
       state.password = e.target.value
     }
     const onPasswordConfirmation = (e) => {
-      state.passwordConfirmation = e.target.value
+      state.password_confirmation = e.target.value
     }
 
     const signup = (e) => {
@@ -56,23 +56,28 @@ export default {
       const credentials = {
         username: state.username,
         password: state.password,
-        passwordConfirmation: state.passwordConfirmation,
+        passwordConfirmation: state.password_confirmation,
         phonenumber: state.phonenumber,
         address: state.address,
         email: state.email,
+        fullname: '임시'
       }
-      axios({
-        method: 'post',
-        url: 'http://127.0.0.1:8000/accounts/signup/',
-        data: credentials
-      })
-      .then((res) => {
-        console.log(res)
-        router.push({ path: '/login'})
-      })
-      .catch((res) => {
-        console.log(res)
-      })
+      if (credentials.username != '' && credentials.password != '' && credentials.passwordConfirmation != '' && credentials.email != '' && credentials.phonenumber != ''){
+        axios({
+          method: 'post',
+          url: 'http://127.0.0.1:8000/accounts/signup/',
+          data: credentials
+        })
+        .then((res) => {
+          console.log(res)
+          router.push({ path: '/login'})
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+      } else {
+        alert('작성이 덜 됐습니다')
+      }
     }
 
     return {state, onUsername, onEmail, onPhonenumber, onAddress, onPassword, onPasswordConfirmation, signup}

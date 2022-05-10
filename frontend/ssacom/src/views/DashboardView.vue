@@ -4,19 +4,22 @@
   <time-graph></time-graph>
   <day-graph></day-graph>
   <month-graph></month-graph>
+  <real-time-graph></real-time-graph>
 </template>
 
 <script>
 import TimeGraph from '@/components/dashboard/TimeGraph'
 import DayGraph from '../components/dashboard/DayGraph.vue'
 import MonthGraph from '@/components/dashboard/MonthGraph'
+import RealTimeGraph from "../components/dashboard/RealTimeGraph.vue"
 
 export default {
     name: 'DashboardView',
     components: {
         TimeGraph,
         DayGraph,
-        MonthGraph
+        MonthGraph,
+        RealTimeGraph
     },
     data() {
 
@@ -27,3 +30,4 @@ export default {
 <style>
 
 </style>
+

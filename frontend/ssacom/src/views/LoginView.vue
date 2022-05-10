@@ -43,6 +43,8 @@
 
 <script>
 import axios from 'axios';
+import { useStore } from "vuex"
+
 const baseURL = 'http://127.0.0.1:8000/'
 
 export default {
@@ -53,6 +55,9 @@ export default {
         username:'',
         password:''
       },
+      isCheck:false,
+      isAlert:false,
+      store: useStore()
     }
   },
   watch : {
@@ -69,8 +74,12 @@ export default {
       })
       .then(res => {
         console.log(res)
+
+        // const store = useStore()
+        // store.dispatch('login')
         localStorage.setItem('jwt', res.data.token)
         this.$router.push({ name : 'mypage' })
+        this.store.dispatch('login')
         // if (res.data.Success){
         //   if (res.data) {
         //     console.log('여기는 then')
