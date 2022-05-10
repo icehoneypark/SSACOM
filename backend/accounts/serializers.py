@@ -8,3 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         model = get_user_model()
         fields = '__all__'
 
+class UserChangeSerailizer(serializers.ModelSerializer):
+
+    class Meta:
+        model = get_user_model()
+        fields = ('phonenumber', 'fullname')
