@@ -1,5 +1,5 @@
 <template>
-  <div style="float: left;">
+  <div style="float: left; height:100vh">
     <nav-bar />
   </div>
   <div style="float: left;">

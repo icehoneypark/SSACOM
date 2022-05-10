@@ -7,6 +7,7 @@
       개인정보 수정
     </button>
       <br>
+      <!-- 지금은 state에서 받아오도록 돼있는데, 개인정보 수정 후에 api요청으로 가져오도록 고칠 예정 -->
       <p>Tel. {{state.phonenumber}}</p>
     </div>
     <shop-list />
@@ -32,10 +33,16 @@
             <br>
             <span>Address: </span>
             <input type="text" placeholder="주소를 입력하세요" @input="onAddress">
+            <br>
+            <span>fullname: </span>
+            <input type="text" placeholder="이름을 입력하세요" @input="onFullname">
+            <br>
+            <span>Email: </span>
+            <input type="text" placeholder="Email을 입력하세요" @input="onEmail">
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="saveChange()">Save changes</button>
+            <button type="button" class="btn btn-primary" @click="saveChange">Save changes</button>
           </div>
         </div>
       </div>
@@ -47,6 +54,8 @@
 import ShopList from "../components/ShopList.vue";
 import axios from 'axios';
 import { onMounted, reactive } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 import VueJwtDecode from 'vue-jwt-decode';
 
 
@@ -54,44 +63,76 @@ export default ({
   components: {ShopList},
 
   setup() {
+    const router = useRouter()
+    const store = useStore()
     const hash = localStorage.getItem('jwt')
     const info = VueJwtDecode.decode(hash)
 
     const state = reactive({
       username: '',
       phonenumber: '',
-      address: ''
+      address: '',
+      fullname: '',
+      email: '',
     })
+    // let inputData = {
+    //   username: '',
+    //   phonenumber: '',
+    //   fullname: '',
+    //   email: '',
+    // }
     // 유저 데이터 입력
     const onTel = (e) => {
       state.phonenumber = e.target.value
     }
 
     const onAddress = (e) => {
-      state.phonenumber = e.target.value
+      state.address = e.target.value
+    }
+
+    const onFullname = (e) => {
+      state.fullname = e.target.value
+    }
+
+    const onEmail = (e) => {
+      state.email = e.target.value
     }
 
     // 함수 부분
 
     const saveChange = () => {
       const data = {
+        // username: 'test1',
+        // password: '1234567',
         phonenumber: state.phonenumber,
-        address: state.address,
+        email:'test@naver.com',
+        fullname:'kkkk',
+        // address: state.address,
       }
       axios({
         method: 'put',
-        url: `userchange/${info.user_id}/`, // 1에다가 pk 이름 따서 넣기 (jwt decode해서 정보있으면 그걸로 넣고 없으면 pk 받아오는 api 새로 만들거나 `store`에 저장하거나)
-        data,
+        url: `http://localhost:8000/accounts/userchange/${info.user_id}/`,
+        data: data
       })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res)
+        })
       .catch((res) => console.log(res))
     }
 
     const userDelete = () => {
       if(confirm('정말 탈퇴하시겠습니까?')){
         axios({
-          method: 'DELETE',
+          method: 'delete',
           url: `http://localhost:8000/accounts/userdelete/${info.user_id}`,
+        })
+        .then(() => {
+          store.dispatch('logout')
+          localStorage.removeItem('jwt')
+          router.push({ name : "login" })
+        })
+        .catch(() => {
+          alert('알 수 없는 이유로 회원탈퇴에 실패하였습니다.')
         })
       }
     }
@@ -100,20 +141,24 @@ export default ({
     onMounted(() => {
       axios({
         method: 'get',
-        url: `http://localhost:8000/accounts/${info.user_id}/` // pk 넣기
+        url: `http://localhost:8000/accounts/${info.user_id}/`
       })
       .then((res) => {
         console.log(res)
-        state.username = res.data.username
         state.phonenumber = res.data.phonenumber
-        // state.address = res.data.address
+        state.username = res.data.username
+        state.fullname = res.data.fullname
+        state.email = res.data.email
       })
       .catch((res) => {
         console.log(res)
       })
+      state.username = info.username
+      state.phonenumber = info.phonenumber
+      console.log(info)
     })
 
-    return {state, saveChange, onTel, onAddress, userDelete}
+    return {state, saveChange, onTel, onAddress, userDelete, onFullname, onEmail}
   },
 })
 </script>

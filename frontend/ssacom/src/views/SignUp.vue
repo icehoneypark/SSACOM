@@ -48,7 +48,7 @@ export default {
       state.password = e.target.value
     }
     const onPasswordConfirmation = (e) => {
-      state.passwordConfirmation = e.target.value
+      state.password_confirmation = e.target.value
     }
 
     const signup = (e) => {
@@ -56,13 +56,13 @@ export default {
       const credentials = {
         username: state.username,
         password: state.password,
-        passwordConfirmation: state.passwordConfirmation,
+        passwordConfirmation: state.password_confirmation,
         phonenumber: state.phonenumber,
         address: state.address,
         email: state.email,
+        fullname: '임시'
       }
-      // 조건문 다시작성해야 할듯
-      if (state.username !== '' && state.password !== '' && state.password_confirmation !== '' && state.email !== '' && state.phonenumber !== ''){
+      if (credentials.username != '' && credentials.password != '' && credentials.passwordConfirmation != '' && credentials.email != '' && credentials.phonenumber != ''){
         axios({
           method: 'post',
           url: 'http://127.0.0.1:8000/accounts/signup/',

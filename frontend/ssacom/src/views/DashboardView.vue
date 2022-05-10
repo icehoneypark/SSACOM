@@ -6,9 +6,10 @@
 </template>
 
 <script>
-import RealTimeGraph from "@/components/dashboard/RealTimeGraph.vue"
+import RealTimeGraph from "../components/dashboard/RealTimeGraph.vue"
 import DayGraph from '../components/dashboard/DayGraph.vue'
 
 export default {
   components: {RealTimeGraph, DayGraph}
 }
+</script>
