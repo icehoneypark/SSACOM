@@ -113,3 +113,72 @@ while True:
 ```
 
 ![image-20220506165114469](raspberrypi.assets/image-20220506165114469.png)![image-20220506172429029](raspberrypi.assets/image-20220506172429029.png)
+
+### 라즈베리파이 UWB 모듈 입력 PACKET 추가
+
+```python
+import serial
+from time import sleep
+import RPi.GPIO as GPIO
+
+# ser = serial.Serial('/dev/ttyUSB0',115200)
+ser = serial.Serial ("/dev/ttyS0", 115200)    #Open port with baud rate
+# ser = serial.Serial ("/dev/ttyS0", 921600)    #Open port with baud rate
+
+sw=18
+
+a = 0
+
+packet = bytearray()
+
+packet.append(0x53)#STX1:S
+packet.append(0xf1)#STX2
+packet.append(0x09)#len
+packet.append(0x00)#len
+packet.append(0x06)#data
+packet.append(0x53)#S
+packet.append(0x45)#E
+packet.append(0x4e)#N
+packet.append(0x44)#D
+packet.append(0x5f)#_
+packet.append(0x5f)#_
+packet.append(0x4f)#O
+packet.append(0x4e)#N
+packet.append(0x8B)#CHECKSUM
+packet.append(0x45)#ETX:E
+
+data_lst = list()
+
+GPIO.setmode(GPIO.BCM)
+ 
+# resistance => pull down
+GPIO.setup(sw,GPIO.IN,GPIO.PUD_DOWN)
+
+status = 0
+
+while True:
+    ser.write(packet)
+    # ser.write(b'xff')
+    print ("started => {} ".format(a))
+    received_data = ser.read()              #read serial port
+    # sleep(0.03)
+    data_left = ser.inWaiting()             #check for remaining byte
+    received_data += ser.read(data_left)
+    data_lst.append(received_data)
+    if len(data_lst) == 40:
+        print(data_lst)
+        data_lst = list()
+    print (received_data)                   #print received data
+    # ser.write(received_data)
+    # ser.write(1)
+    a += 1
+    
+    if GPIO.input(sw)==1 and status == 0:
+        print("CHECKED")
+        status = 1
+        
+    elif GPIO.input(sw)==0 and status == 1:
+        print("UNCHECKED")
+        status = 0
+```
+
