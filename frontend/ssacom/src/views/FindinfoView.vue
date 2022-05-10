@@ -9,7 +9,7 @@
             <span class="input-group-text">이름</span>
             <!-- <label for="name">이름 입력</label> -->
             <!-- 이름 어디 쓰는지 알아보고 고칠 것임 -->
-            <input type="text" class="form-control" v-model="idFinder.name">
+            <input type="text" class="form-control" v-model="idFinder.fullname">
           </div>
           <div class="input-group">
             <span class="input-group-text">전화번호</span>
@@ -54,28 +54,28 @@
 
 <script>
 import axios from 'axios';
+import { reactive } from '@vue/reactivity';
 const baseURL = 'http://127.0.0.1:8000/'
 
 export default {
   name: 'FindinfoView',
-  data() {
-    return {
-      idFinder:{
-        name:'',
-        phonenumber:''
-      },
-      pwFinder:{
-        name:'',
-        username:'',
-        phonenumber:'',
-        email:''
-      },
-      myid:''
-    }
-  },
-  methods: {
-    findId: function() {
-      console.log(this.idFinder)
+  setup() {
+    const idFinder = reactive({
+      fullname:'',
+      phonenumber:''
+    })
+    const pwFinder = reactive({
+      fullname:'',
+      username:'',
+      phonenumber:'',
+      email:''
+    })
+    const findId = (e) => {
+      e.preventDefault()
+      const idInfo = {
+        fullname: idFinder.fullname,
+        phonenumber: idFinder.phonenumber,
+      }
       axios({
         methods: 'get',
         url: `${baseURL}accounts/username/`,
@@ -84,8 +84,8 @@ export default {
         console.log(res.data)
         for (let info in res.data) {
           console.log(res.data[info])
-          if (res.data[info].first_name == this.idFinder.name) {
-            console.log(res.data[info].username)
+          if (res.data[info].phonenumber == idInfo.phonenumber) {
+            console.log(res.data[info].fullname)
             console.log(res.data[info].email)
             this.myid = res.data[info].username
           }
@@ -95,7 +95,48 @@ export default {
         console.log(err)
         alert(err)
       })
-    },
+    }
+
+    return { idFinder, pwFinder, findId}
+  },
+  // data() {
+  //   return {
+  //     idFinder:{
+  //       name:'',
+  //       phonenumber:''
+  //     },
+  //     pwFinder:{
+  //       name:'',
+  //       username:'',
+  //       phonenumber:'',
+  //       email:''
+  //     },
+  //     myid:''
+  //   }
+  // },
+  methods: {
+    // findId: function() {
+    //   console.log(this.idFinder)
+    //   axios({
+    //     methods: 'get',
+    //     url: `${baseURL}accounts/username/`,
+    //   })
+    //   .then(res => {
+    //     console.log(res.data)
+    //     for (let info in res.data) {
+    //       console.log(res.data[info])
+    //       if (res.data[info].first_name == this.idFinder.name) {
+    //         console.log(res.data[info].username)
+    //         console.log(res.data[info].email)
+    //         this.myid = res.data[info].username
+    //       }
+    //     }
+    //   })
+    //   .catch(err => {
+    //     console.log(err)
+    //     alert(err)
+    //   })
+    // },
     findPw: function() {}
   }
 

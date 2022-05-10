@@ -1,9 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from .serializers import noticesSerializer
-<<<<<<< HEAD
-=======
 from .models import notices
->>>>>>> develop
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view

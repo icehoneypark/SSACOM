@@ -2,8 +2,7 @@
   <h2>여기는 시간별 그래프_지원</h2>
 
   <div class="d-flex justify-content-center">
-    <apexchart 
-      width="500" type="line" 
+    <apexchart width="500" type="line" 
       :options="options" :series="series">
     </apexchart>  
   </div>
@@ -25,19 +24,8 @@ export default {
       },
       xaxis: {
         categories: [ // 카테고리는 하드코딩 오케이(시간은 정해져있으니까)
-          "자",
-          "축",
-          "인",
-          "묘",
-          "진",
-          "사",
-          "오",
-          "미",
-          "신",
-          "유",
-          "술",
-          "해",
-
+          "자", "축", "인", "묘", "진", "사",
+          "오", "미", "신", "유", "술", "해"
         ]
       }
     },
