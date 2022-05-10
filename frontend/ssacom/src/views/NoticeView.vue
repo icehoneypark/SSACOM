@@ -4,15 +4,16 @@
     <button @click="create" type="button">글작성</button>
     <button @click="getpost" type="button">새로고침</button>
   </div>
-
+  {{ state.test }}
+  {{ state.posts }}
   <div>
     <table class="table container" >
       <thead>
         <tr>
-          <th scope="col">글번호</th>
+          <th scope="col">게시판 순서</th>
           <th scope="col">제목</th>
-          <th scope="col">작성자</th>
-          <th scope="col">작성일자</th>
+          <th scope="col">내용</th>
+          <th scope="col">글 주소</th>
         </tr>
       </thead>
       <tbody>
@@ -31,43 +32,124 @@
 
 <script>
 import axios from 'axios'
+import { onMounted, } from "vue";
 
 export default {
   name : 'NoticeView',
-  data : function() {
-    return {
-      posts : null
+  
+  setup() {
+    const token = localStorage.getItem('jwt')
+
+    const state = {
+      posts: '',
+      num: 0,
+      test : {},
     }
-  },
-  methods : {
-    create () {
+
+
+    const create = () => {
       this.$router.push('/notice/create')
-    },
-    detail : function (index) {
+    }
+    const detail = (index) => {
       this.$router.push({
         name: 'noticedetail',
         params: {
           id: index,
-          test: 'qqq'
         }
       })
-    },
-    getpost : function () {
+
+    }
+
+    const getpost = () => {
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/notices/',
+        headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
-            console.log(res)
-            this.posts = res.data
-          })
-          .catch(err => {
-            console.log(err)
-          })
-    },
+          // console.log(res)
+          state.posts = res.data
+          console.log(12345)
+          console.log(state.posts)
+          state.num = state.posts.length
+          for (let i = 0; i < state.num; i++) {
+            state.test[i] = state.posts[i]
+          }
+          console.log(state.test)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+    }
+
+    onMounted(() => {
+      getpost()
+    })
+    return {getpost, create, detail, state,}
   },
-  created: function () {
-    this.getpost()
-  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // data : function() {
+  //   return {
+  //     posts : null,
+  //     token : localStorage.getItem('jwt')
+  //   }
+  // },
+  // methods : {
+  //   create () {
+  //     this.$router.push('/notice/create')
+  //   },
+  //   detail : function (index) {
+  //     this.$router.push({
+  //       name: 'noticedetail',
+  //       params: {
+  //         id: index,
+  //       }
+  //     })
+  //   },
+  //   getpost : function () {
+  //     axios({
+  //       method: 'get',
+  //       url: 'http://127.0.0.1:8000/notices/',
+  //       headers: {Authorization : `JWT ${this.token}`},
+  //     })
+  //       .then(res => {
+  //           console.log(res)
+  //           this.posts = res.data
+  //           console.log(this.posts)
+  //         })
+  //         .catch(err => {
+  //           console.log(err)
+  //         })
+  //   },
+  // },
+  // created: function () {
+  //   this.getpost()
+  // }
+
+
+
+
+
+
+
+
 }
 </script>

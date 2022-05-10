@@ -24,12 +24,15 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name : 'NoticeCreate',
   data : function() {
     return {
       title : null,
       content : null,
+      token : localStorage.getItem('jwt'),
     }
   },
   methods : {
@@ -38,7 +41,18 @@ export default {
         title: this.title,
         content: this.content,
       }
-      this.$store.dispatch("createNotice", noticeData),
+      axios({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/notices/',
+        data: noticeData,
+        headers: {Authorization : `JWT ${this.token}`},
+      })
+        .then(res => {
+            console.log(res)
+          })
+          .catch(err => {
+            console.log(err)
+          })
       this.$router.push("/notice")
     }
   }
