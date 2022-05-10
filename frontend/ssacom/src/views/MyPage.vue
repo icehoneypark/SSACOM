@@ -75,27 +75,27 @@ export default ({
       fullname: '',
       email: '',
     })
-    // let inputData = {
-    //   username: '',
-    //   phonenumber: '',
-    //   fullname: '',
-    //   email: '',
-    // }
+    let inputData = {
+      username: '',
+      phonenumber: '',
+      fullname: '',
+      email: '',
+    }
     // 유저 데이터 입력
     const onTel = (e) => {
-      state.phonenumber = e.target.value
+      inputData.phonenumber = e.target.value
     }
 
     const onAddress = (e) => {
-      state.address = e.target.value
+      inputData.address = e.target.value
     }
 
     const onFullname = (e) => {
-      state.fullname = e.target.value
+      inputData.fullname = e.target.value
     }
 
     const onEmail = (e) => {
-      state.email = e.target.value
+      inputData.email = e.target.value
     }
 
     // 함수 부분
@@ -104,9 +104,9 @@ export default ({
       const data = {
         // username: 'test1',
         // password: '1234567',
-        phonenumber: state.phonenumber,
-        email:'test@naver.com',
-        fullname:'kkkk',
+        phonenumber: inputData.phonenumber,
+        email: inputData.email,
+        fullname: inputData.fullname,
         // address: state.address,
       }
       axios({
@@ -116,6 +116,17 @@ export default ({
       })
       .then((res) => {
         console.log(res)
+
+        axios({
+          method: 'get',
+          url: `http://localhost:8000/accounts/${info.user_id}/`
+        })
+        .then((res) => {
+          console.log(res)
+          state.phonenumber = res.data.phonenumber
+          state.fullname = res.data.fullname
+          state.email = res.data.email
+        })
         })
       .catch((res) => console.log(res))
     }
@@ -139,6 +150,9 @@ export default ({
 
     // 라이프 사이클
     onMounted(() => {
+      const test = [{id: 0}, {id: 1},{id: 2}]
+      console.log(test)
+      console.log(typeof(test))
       axios({
         method: 'get',
         url: `http://localhost:8000/accounts/${info.user_id}/`
@@ -153,12 +167,9 @@ export default ({
       .catch((res) => {
         console.log(res)
       })
-      state.username = info.username
-      state.phonenumber = info.phonenumber
-      console.log(info)
     })
 
-    return {state, saveChange, onTel, onAddress, userDelete, onFullname, onEmail}
+    return {state, onTel, onAddress, onFullname, onEmail, userDelete, saveChange }
   },
 })
 </script>
