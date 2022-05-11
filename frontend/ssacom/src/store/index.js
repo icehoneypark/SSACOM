@@ -15,7 +15,7 @@ export default createStore({
     },
     LOGOUT: function(state){
       state.isLogin = false
-    }
+    },
   },
   actions: {
     login: function({commit}){
