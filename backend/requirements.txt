@@ -16,7 +16,7 @@ kiwisolver==1.4.2
 matplotlib==3.5.1
 mysqlclient==2.1.0
 numpy==1.21.6
-object-detection==0.1
+object-detection-0.1==0.1
 packaging==21.3
 Pillow==9.1.0
 pyparsing==3.0.8

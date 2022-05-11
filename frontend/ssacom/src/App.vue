@@ -1,7 +1,10 @@
 <template>
-  <NavBar />
-
-  <router-view/>
+  <div style="float: left; height:100vh">
+    <nav-bar />
+  </div>
+  <div style="float: left;">
+    <router-view/>
+  </div>
 </template>
 
 <script>

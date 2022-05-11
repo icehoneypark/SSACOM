@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .serializers import UserSerializer 
+from .serializers import UserSerializer, UserChangeSerailizer
 from .models import User
 
 # 회원 가입
@@ -79,7 +79,7 @@ def userchange(request,user_pk):
     user = get_object_or_404(User, pk=user_pk)
 
     if request.method == 'PUT' :
-        serializer = UserSerializer(user, data=request.data)
+        serializer = UserChangeSerailizer(user, data=request.data)
         if serializer.is_valid(raise_exception=True) :
             serializer.save()
             return Response(serializer.data)
