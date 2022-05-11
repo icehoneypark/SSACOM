@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid px-5" style="width:30rem">
+  <div class="container-fluid px-5 pt-5" style="width:30rem">
     <div class="d-flex justify-content-center">
       <div class="row">
         <!-- 아이디 찾을 때 필요한 것 : 이름, 전화번호 -->

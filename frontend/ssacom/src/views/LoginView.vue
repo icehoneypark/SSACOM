@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid px-5" style="width:30rem">
+  <div class="container-fluid px-5 pt-5" style="width:30rem">
     <div class="d-flex justify-content-center">
       <div class="row">
         <h2 class="d-flex justify-content-center my-3">로그인</h2>
