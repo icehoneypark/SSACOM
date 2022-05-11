@@ -21,6 +21,7 @@ export default {
 
 <style lang="scss" scoped>
   .nav {
+    // display: inline-block;
     float: left; 
     height:100vh;
     width: 15vw;

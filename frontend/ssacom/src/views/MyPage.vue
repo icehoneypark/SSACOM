@@ -1,17 +1,29 @@
 <template>
   <div class="mypage">
     <div class="wrapper">
-      <img src="../assets/DefaultProfile.png" alt="" width="50" style="border-radius:30px;">
-      <span>{{state.username}}님의 마이페이지</span>
+      <div class="profile">
+        <img src="../assets/DefaultProfile.png" alt="" width="100" style="border-radius:100px;">
+        <p>{{state.fullname}}</p>
+      </div>
+      <p class="title">회원 정보</p>
+      <p class="smallTitle">아이디</p>
+      <input class="info" type="text" :value="state.username" readonly>
+      <p class="smallTitle">이름</p>
+      <input class="info" type="text" :value="state.fullname" readonly>
+      <p class="smallTitle">전화번호</p>
+      <input class="info" type="text" :value="state.phonenumber" readonly>
+      <p class="smallTitle">이메일</p>
+      <input class="info" type="text" :value="state.email" readonly>
+      <br>
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
       개인정보 수정
-    </button>
+      </button>
+      <button type="button" class="btn btn-danger" @click="userDelete">회원탈퇴</button>
       <br>
       <!-- 지금은 state에서 받아오도록 돼있는데, 개인정보 수정 후에 api요청으로 가져오도록 고칠 예정 -->
-      <p>Tel. {{state.phonenumber}}</p>
     </div>
     <shop-list />
-    <button type="button" class="btn btn-danger" @click="userDelete">회원탈퇴</button>
+    
 
     <!-- 개인정보 수정 폼 모달 -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -22,27 +34,27 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <span>ID: </span>
+            <p class="smallTitle">아이디</p>
             <input type="text" :placeholder="state.username" disabled>
             <br>
-            <span>PW: </span>
+            <p class="smallTitle">비밀번호</p>
             <input type="text" placeholder="*********" disabled>
             <br>
-            <span>Tel: </span>
-            <input type="text" placeholder="전화번호를 입력하세요" @input="onTel">
+            <p class="smallTitle">이름</p>
+            <input type="text" placeholder="이름을 입력하세요" @input="onFullname" :value="state.fullname">
             <br>
+            <p class="smallTitle">전화번호</p>
+            <input type="text" placeholder="전화번호를 입력하세요" @input="onTel" :value="state.phonenumber">
+            <!-- <br>
             <span>Address: </span>
-            <input type="text" placeholder="주소를 입력하세요" @input="onAddress">
+            <input type="text" placeholder="주소를 입력하세요" @input="onAddress"> -->
             <br>
-            <span>fullname: </span>
-            <input type="text" placeholder="이름을 입력하세요" @input="onFullname">
-            <br>
-            <span>Email: </span>
-            <input type="text" placeholder="Email을 입력하세요" @input="onEmail">
+            <p class="smallTitle">이메일</p>
+            <input type="text" placeholder="Email을 입력하세요" @input="onEmail" :value="state.email">
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" @click="saveChange">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary" @click="saveChange">저장</button>
           </div>
         </div>
       </div>
@@ -178,15 +190,67 @@ export default ({
   .mypage{ 
     padding: 20px;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(221, 221, 221);
+    min-height: 100%;
   }
   .wrapper {
     border: 1px solid rgb(150, 150, 150);
     border-radius: 20px;
-    padding: 20px;
-
+    padding: 30px;
+    background-color: white;
+    width: 700px;
+    height: 650px;
     span:first-of-type {
       font-weight: bold;
       font-size: 20px;
+    }
+  }
+
+  .profile {
+    text-align: center;
+    margin-top: 15px;
+    p {
+      margin-top: 15px;
+      font-size: 23px;
+      font-weight: 700;
+    }
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .smallTitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: gray;
+    margin-bottom: 5px;
+    margin-top: 22px;
+  }
+
+  .info {
+    margin-top: 0px;
+    border: 0;
+    border-bottom: 1px solid gray;
+    width: 97%;
+  }
+
+  .btn {
+    margin-top: 40px;
+  }
+
+  .modal-title {
+    font-weight: 600;
+  }
+
+  .modal-body {
+    input {
+      width: 100%;
+      border: 0;
+      border-bottom: 1px solid gray;
     }
   }
 </style>

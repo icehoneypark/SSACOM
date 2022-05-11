@@ -1,7 +1,7 @@
 <template>
-  <div class="wrapper">
+  <div class="shoplist">
     <p>업장 리스트</p>
-    <ul >
+    <ul>
       <li v-for="item in state.shoplist" :key="item"><a href="">{{item}}</a></li>
     </ul>
   </div>
@@ -16,7 +16,7 @@ export default {
   setup() {
     // 변수
     const state = reactive({
-      shoplist: ["대림 목욕탕", "궁중 목욕탕", "테스트 목욕탕"],
+      shoplist: ["대림 목욕탕", "궁중 목욕탕", "테스트 목욕탕", "어쩌고 목욕탕", "저쩌고 목욕탕"],
     })
     // 라이프 사이클
     // onMounted(() => {
@@ -29,10 +29,12 @@ export default {
 }
 </script>
 <style lang='scss' scoped>
-  .wrapper {
+  .shoplist {
     border: 1px solid rgb(150, 150, 150);
+    padding: 20px;
+    background-color: white;
     border-radius: 20px;
-    margin-top: 20px;
+    // margin-top: 20px;
     width: 300px;
     height: 300px;
     p {
@@ -44,6 +46,7 @@ export default {
 
   ul {
     list-style: none;
+    overflow: auto;
     li{
       &:hover {
           color: red;

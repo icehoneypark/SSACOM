@@ -6,10 +6,10 @@
       <input @input="onUsername" type="text" placeholder="">
       <button class="btn btn-primary">중복확인</button>
       <br>
-      <p>비밀번호</p>
+      <span>비밀번호</span><span class="pw-check">영문자와 숫자를 섞어주세요</span>
       <input @input="onPassword" type="password" placeholder="">
       <br>
-      <p>비밀번호 확인</p>
+      <span>비밀번호 확인</span><span class="pw-confirm">비밀번호가 일치하지 않습니다.</span>
       <input @input="onPasswordConfirmation" type="password" placeholder="">
       <br>
       <hr>
@@ -19,7 +19,7 @@
       <br>
       <p>이메일</p>
       <input @input="onEmail" type="text" placeholder="">
-      <select name="" id="">
+      <select name="" id="mailDomain">
         <option value="@naver.com">@naver.com</option>
         <option value="@google.com">@google.com</option>
         <option value="@hanmail.net">@hanmail.net</option>
@@ -72,15 +72,18 @@ export default {
 
     const signup = (e) => {
       e.preventDefault()
+      const mail = document.getElementById("mailDomain")
+      const mailVal = mail.options[mail.selectedIndex].value
       const credentials = {
         username: state.username,
         password: state.password,
         passwordConfirmation: state.password_confirmation,
         phonenumber: state.phonenumber,
-        address: state.address,
-        email: state.email,
-        fullname: '임시'
+        // address: state.address,
+        email: state.email + mailVal,
+        fullname: state.fullname
       }
+      console.log(credentials.email)
       if (credentials.username != '' && credentials.password != '' && credentials.passwordConfirmation != '' && credentials.email != '' && credentials.phonenumber != ''){
         axios({
           method: 'post',
@@ -105,7 +108,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
   .page {
     display: flex;
     justify-content: center;

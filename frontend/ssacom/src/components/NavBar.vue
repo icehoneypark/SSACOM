@@ -5,23 +5,23 @@
     <br><br>
     <!-- 로그인 -->
     <ul v-if="isLogin">
-      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i> Notice</div></router-link>
+      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i><span> Notice</span></div></router-link>
       <hr>
-      <router-link to="/dashboard"><div class="nav_link"><i class="fa-solid fa-chart-line"></i> DashBoard</div></router-link>
-      <router-link to="/mypage"><div class="nav_link"><i class="fa-solid fa-user"></i> MyPage</div></router-link>
+      <router-link to="/dashboard"><div class="nav_link"><i class="fa-solid fa-chart-line"></i><span> DashBoard</span></div></router-link>
+      <router-link to="/mypage"><div class="nav_link"><i class="fa-solid fa-user"></i><span> MyPage</span></div></router-link>
       <hr>
-      <router-link to="/faq"><div class="nav_link"><i class="fa-solid fa-circle-question"></i> FAQ</div></router-link>
-      <router-link to="/qna"><div class="nav_link"><i class="fa-brands fa-quora"></i> QnA</div></router-link>
+      <router-link to="/faq"><div class="nav_link"><i class="fa-solid fa-circle-question"></i><span> FAQ</span></div></router-link>
+      <router-link to="/qna"><div class="nav_link"><i class="fa-brands fa-quora"></i><span> QnA</span></div></router-link>
     </ul>
     <!-- 비로그인 -->
     <ul v-if="!isLogin">
-      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i> Notice</div></router-link>
+      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i><span> Notice</span></div></router-link>
       <hr>
-      <router-link to="/login"><div class="nav_link"><i class="fa-solid fa-key"></i> 로그인</div></router-link>
-      <router-link to="/signup"><div class="nav_link"><i class="fa-solid fa-user-plus"></i>회원가입</div></router-link>
+      <router-link to="/login"><div class="nav_link"><i class="fa-solid fa-key"></i><span> 로그인</span></div></router-link>
+      <router-link to="/signup"><div class="nav_link"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></div></router-link>
     </ul>
     <ul class="user">
-      <a href="" @click="logout"><div class="nav_link"><i class="fa-solid fa-right-to-bracket"></i> logout</div></a>
+      <a href="" @click="logout"><div class="nav_link"><i class="fa-solid fa-right-to-bracket"></i> <span>logout</span></div></a>
     </ul>
   </nav>
 </template>
@@ -66,6 +66,9 @@ export default {
   // text-align: center;
   // color: #2c3e50;
   // }
+  @media screen and (max-width: 1100px) { 
+    span { display: none; } 
+  }
 
   nav {
     // position: fixed;
@@ -96,7 +99,7 @@ export default {
           }
         }
 
-        :hover {
+        .nav_link:hover {
           color: white;
           background-color: #1e62b9;
           box-shadow: 5px 5px 5px black;
