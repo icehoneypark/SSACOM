@@ -1,15 +1,33 @@
 <template>
   <h1>여기는 대시보드</h1>
   <p>아래에 컴포넌트들을 만들어주세요 ㅎㅎ</p>
-  <real-time-graph />
-  <day-graph />
+  <time-graph></time-graph>
+  <day-graph></day-graph>
+  <month-graph></month-graph>
+  <real-time-graph></real-time-graph>
 </template>
 
 <script>
-import RealTimeGraph from "../components/dashboard/RealTimeGraph.vue"
+import TimeGraph from '@/components/dashboard/TimeGraph'
 import DayGraph from '../components/dashboard/DayGraph.vue'
+import MonthGraph from '@/components/dashboard/MonthGraph'
+import RealTimeGraph from "../components/dashboard/RealTimeGraph.vue"
 
 export default {
-  components: {RealTimeGraph, DayGraph}
-}
+    name: 'DashboardView',
+    components: {
+        TimeGraph,
+        DayGraph,
+        MonthGraph,
+        RealTimeGraph
+    },
+    data() {
+
+    }
+  }
 </script>
+
+<style>
+
+</style>
+
