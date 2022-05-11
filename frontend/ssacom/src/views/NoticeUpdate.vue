@@ -48,6 +48,7 @@ export default {
 
 
     const update = () => {
+
       const noticeData = {
         id : state.posts.id,
         title: state.posts.title,
@@ -55,7 +56,7 @@ export default {
       }
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/notices/${state.id}`,
+        url: `http://127.0.0.1:8000/notices/${state.id}/`,
         data: noticeData,
         headers: {Authorization : `JWT ${token}`},
       })
