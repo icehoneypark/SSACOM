@@ -21,7 +21,7 @@ def notice_list_create(request):
             return Response( serializer.data,status=status.HTTP_201_CREATED)
 
 
-@api_view(['PUT','DELETE'])
+@api_view(['PUT','DELETE','GET'])
 def notice_update_delete(request, notice_id):
     notice = get_object_or_404(notices, pk=notice_id)
     # 수정
@@ -34,4 +34,9 @@ def notice_update_delete(request, notice_id):
     elif request.method == 'DELETE':
         notice.delete()
         return Response({'id':notice_id},status=status.HTTP_204_NO_CONTENT)
+    
+    #글 조회
+    elif request.method == 'GET':
+        serializer = noticesSerializer(notice)
+        return Response(serializer.data)
             
