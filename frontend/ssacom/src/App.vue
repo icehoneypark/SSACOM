@@ -1,8 +1,8 @@
 <template>
-  <div style="float: left; height:100vh">
+  <div class="nav">
     <nav-bar />
   </div>
-  <div style="float: left;">
+  <div class="router">
     <router-view/>
   </div>
 </template>
@@ -19,6 +19,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+  .nav {
+    float: left; 
+    height:100vh;
+    width: 15vw;
+  }
+  
+  .router {
+    margin-left: 15vw; 
+    width:85vw;
+    height: 100vh;
+    overflow: auto;
+  }
 </style>

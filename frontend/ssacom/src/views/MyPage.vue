@@ -175,10 +175,9 @@ export default ({
 </script>
 
 <style lang="scss" scoped>
-
   .mypage{ 
-    padding: 20px
-
+    padding: 20px;
+    width: 100%;
   }
   .wrapper {
     border: 1px solid rgb(150, 150, 150);

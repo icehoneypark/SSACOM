@@ -4,8 +4,8 @@
     <button @click="create" type="button">글작성</button>
     <button @click="getpost" type="button">새로고침</button>
   </div>
-  {{ state.test }}
-  {{ state.posts }}
+  <!-- {{ state.test }} -->
+  <!-- {{ state.posts }} -->
   <div>
     <table class="table container" >
       <thead>
@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr :key="index" v-for="(post, index) in posts" @click="detail(post.id)">
+        <tr :key="index" v-for="(post, index) in state.posts" @click="detail(post.id)">
           <td>{{ index }}</td>
           <td>{{ post.title }}</td>
           <td>{{ post.content }}</td>
@@ -32,26 +32,28 @@
 
 <script>
 import axios from 'axios'
-import { onMounted, } from "vue";
+import { useRouter } from 'vue-router';
+import { onMounted, reactive, } from "vue";
 
 export default {
   name : 'NoticeView',
   
   setup() {
+    const router = useRouter()
     const token = localStorage.getItem('jwt')
 
-    const state = {
-      posts: '',
+    const state = reactive({
+      posts: [],
       num: 0,
       test : {},
-    }
+    })
 
 
     const create = () => {
-      this.$router.push('/notice/create')
+      router.push('/notice/create')
     }
     const detail = (index) => {
-      this.$router.push({
+      router.push({
         name: 'noticedetail',
         params: {
           id: index,
@@ -67,15 +69,13 @@ export default {
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
-          // console.log(res)
+          console.log(res.data)
           state.posts = res.data
-          console.log(12345)
-          console.log(state.posts)
           state.num = state.posts.length
-          for (let i = 0; i < state.num; i++) {
-            state.test[i] = state.posts[i]
-          }
-          console.log(state.test)
+          // for (let i = 0; i < state.num; i++) {
+          //   state.test[i] = state.posts[i]
+          // }
+          // console.log(state.test)
         })
         .catch(err => {
           console.log(err)

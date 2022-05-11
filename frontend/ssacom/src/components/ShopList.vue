@@ -53,6 +53,7 @@ export default {
         text-decoration: none;
         color:rgb(75, 75, 75);
         font-weight: bold;
+        transition: all 0.4s;
         &:hover {
           color: red;
         }
