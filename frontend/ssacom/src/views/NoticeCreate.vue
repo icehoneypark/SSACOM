@@ -28,6 +28,9 @@ import axios from 'axios'
 import { useRouter } from "vue-router"
 import { reactive } from "vue"
 
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+
 export default {
   name : 'NoticeCreate',
   setup() {
@@ -45,7 +48,7 @@ export default {
       }
       axios({
         method: 'post',
-        url: 'http://127.0.0.1:8000/notices/',
+        url: `${baseURL}notices/`,
         data: noticeData,
         headers: {Authorization : `JWT ${token}`},
       })
