@@ -13,13 +13,31 @@
 
 <script>
 import axios from 'axios'
+// import { onMounted, reactive } from "vue";
 
 export default {
   name : 'NoticeDetail',
+  // setup() {
+  //   const token = localStorage.getItem('jwt'),
+  //   const state = reactive({
+  //     id: this.$route.params.id,
+  //     posts: null,
+  //   })
+
+
+
+  //   onMounted(() => {
+  //     ax
+  //   })
+  // }
+
+
+
   data : function () {
     return {
       id: this.$route.params.id,
       posts: null,
+      token : localStorage.getItem('jwt')
     }
   },
   computed: {
@@ -32,6 +50,7 @@ export default {
       axios({
           method: 'delete',
           url: `http://127.0.0.1:8000/notices/${this.id}/`,
+          headers: {Authorization : `JWT ${this.token}`},
         })
           .then(res => {
             console.log(res)
@@ -46,6 +65,7 @@ export default {
         method: 'put',
         url: `http://127.0.0.1:8000/notices/${this.id}/`,
         data: this.post,
+        headers: {Authorization : `JWT ${this.token}`},
       })
         .then(res => {
           console.log(res)
@@ -62,6 +82,7 @@ export default {
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/notices/',
+        headers: {Authorization : `JWT ${this.token}`},
       })
         .then(res => {
             console.log(res)

@@ -28,6 +28,7 @@ export default {
       title: null,
       content: null,
       posts: null,
+      token : localStorage.getItem('jwt')
     }
   },
   computed: {
@@ -43,6 +44,7 @@ export default {
       axios({
         method: 'get',
         url: 'http://127.0.0.1:8000/notices/',
+        headers: {Authorization : `JWT ${this.token}`},
       })
         .then(res => {
             console.log(res)

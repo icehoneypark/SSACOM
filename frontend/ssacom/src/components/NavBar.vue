@@ -1,22 +1,27 @@
 <template>
   <nav>
+    <!-- 상단 로고를 어떻게 해야할지.. -->
+    <router-link to="/dashboard"><button class="btn btn-danger">SSACOM X 에스원</button></router-link>
+    <br><br>
     <!-- 로그인 -->
-    <router-link to="/dashboard"><button class="btn btn-danger">SSACOM</button></router-link>
     <ul v-if="isLogin">
-      <li><router-link to="/notice"><i class="fa-solid fa-bullhorn"></i> Notice</router-link></li>
-      <li><router-link to="/mypage">MyPage</router-link></li>
-      <li><router-link to="/dashboard">DashBoard</router-link></li>
-      <li><a href="" @click="logout">logout</a></li>
+      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i><span> Notice</span></div></router-link>
+      <hr>
+      <router-link to="/dashboard"><div class="nav_link"><i class="fa-solid fa-chart-line"></i><span> DashBoard</span></div></router-link>
+      <router-link to="/mypage"><div class="nav_link"><i class="fa-solid fa-user"></i><span> MyPage</span></div></router-link>
+      <hr>
+      <router-link to="/faq"><div class="nav_link"><i class="fa-solid fa-circle-question"></i><span> FAQ</span></div></router-link>
+      <router-link to="/qna"><div class="nav_link"><i class="fa-brands fa-quora"></i><span> QnA</span></div></router-link>
     </ul>
     <!-- 비로그인 -->
     <ul v-if="!isLogin">
-      <li><router-link to="/notice"><i class="fa-solid fa-bullhorn"></i> Notice</router-link></li>
-      <li><router-link to="/login"><i class="fa-solid fa-key"></i> 로그인</router-link></li>
-      <li><router-link to="/signup"><i class="fa-solid fa-right-to-bracket"></i> 회원가입</router-link></li>
+      <router-link to="/notice"><div class="nav_link"><i class="fa-solid fa-bullhorn"></i><span> Notice</span></div></router-link>
+      <hr>
+      <router-link to="/login"><div class="nav_link"><i class="fa-solid fa-key"></i><span> 로그인</span></div></router-link>
+      <router-link to="/signup"><div class="nav_link"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></div></router-link>
     </ul>
     <ul class="user">
-      <li>1번</li>
-      <li>2번</li>
+      <a href="" @click="logout"><div class="nav_link"><i class="fa-solid fa-right-to-bracket"></i> <span>logout</span></div></a>
     </ul>
   </nav>
 </template>
@@ -61,43 +66,62 @@ export default {
   // text-align: center;
   // color: #2c3e50;
   // }
+  @media screen and (max-width: 1100px) { 
+    span { display: none; } 
+  }
 
   nav {
-    width: 15rem;
+    // position: fixed;
+    width: 100%;
     padding: 30px;
     border-right: 1px solid gray;
     height: 100%;
     background-color: #0C4DA2;
-    // a {
-    //   float: left
-    // }
+    overflow: auto;
 
     ul {
       list-style: none;
       padding: 0px;
       margin-top: 20px;
-      li {
-        margin-bottom: 15px;
-        width: 100%;
-        // 비활성화  탭
-        a {
-          text-decoration: none;
-          font-weight: bold;
-          color: white;
+      // 비활성화  탭
+      a {
+        text-decoration: none;
+        font-weight: bold;
+        color: rgb(206, 206, 206);
+        .nav_link {
+          transition: all 0.4s;
+          padding: 5px;
+          margin-bottom: 15px;
+          border-radius: 15px;
+          width: 100%;
+          i {
+            margin-right: 15px;
+          }
         }
-        // 활설화 탭
-        a.router-link-exact-active{
-          color: #8cf7c7;
+
+        .nav_link:hover {
+          color: white;
+          background-color: #1e62b9;
+          box-shadow: 5px 5px 5px black;
+        }
+      }
+
+      // 활설화 탭
+      a.router-link-exact-active{
+        color: white;
+        .nav_link {
+          background-color: #2376e2;
+          padding: 5px;
+          margin-bottom: 15px;
+          width: 100%;
         }
       }
     }
 
     .user {
-      border-radius: 5px;
-      background-color: white;
+      border-radius: 15px;
       position:fixed;
       bottom:15px;
-      width: 100%;
     }
   }
 

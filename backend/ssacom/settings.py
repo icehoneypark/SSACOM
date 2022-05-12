@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+    'dashboard',
 
     # else
+    'channels',
     'corsheaders',
     'rest_framework',
     'django_extensions',
@@ -80,7 +82,17 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'ssacom.asgi.application'
 WSGI_APPLICATION = 'ssacom.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 
 # Database
