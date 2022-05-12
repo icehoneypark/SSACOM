@@ -26,3 +26,5 @@ six==1.16.0
 sqlparse==0.4.2
 tzdata==2022.1
 urllib3==1.26.9
+channels==3.0.1
+channels-redis==2.4.2
