@@ -1,70 +1,84 @@
 <template>
   <h1>update</h1>
   <button @click="update">작성</button>
-  {{ index }}
-  {{ post }}
   <div>
     <input 
     type="text"
-    v-model="title"
-    placeholder="제목">
+    v-model="state.posts.title">
 
     <textarea
       type="text"
-      v-model="content"
-      placeholder="내용입력"
+      v-model="state.posts.content"
     ></textarea>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { useRouter, useRoute } from "vue-router";
+import { onMounted, reactive, } from "vue";
 
 export default {
   name : 'NoticeUpdate',
-  data: function() {
-    return {
-      index : this.$route.params.id,
-      title: null,
-      content: null,
-      posts: null,
-      token : localStorage.getItem('jwt')
-    }
-  },
-  computed: {
-    post: function () {
-      return this.posts.find(post => post.id === Number(this.index))
-    } 
-  },
-  created: function () {
-    this.getpost()
-  },
-  methods: {
-    getpost : function () {
+  setup() {
+    const router = useRouter()
+    const route = useRoute()
+    const token = localStorage.getItem('jwt')
+    const state = reactive({
+      id: route.params.id,
+      posts: {},
+    })
+
+
+    const getpost = () => {
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/notices/',
-        headers: {Authorization : `JWT ${this.token}`},
+        url: `http://127.0.0.1:8000/notices/${state.id}`,
+        headers: {Authorization : `JWT ${token}`},
+      })
+        .then(res => {
+          // console.log(res)
+          state.posts = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
+    }
+
+
+    const update = () => {
+
+      const noticeData = {
+        id : state.posts.id,
+        title: state.posts.title,
+        content: state.posts.content,
+      }
+      axios({
+        method: 'put',
+        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        data: noticeData,
+        headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
             console.log(res)
-            this.posts = res.data
           })
           .catch(err => {
             console.log(err)
           })
-    },
-    // update: function () {
-    //   const noticeData = {
-    //     id : this.index,
-    //     title: this.title,
-    //     content: this.content,
-    //   }
-    //   this.$store.dispatch("updateNotice", noticeData),
-    //   this.$router.push({
-    //     name: 'NoticeDetail',
-    //   })
-    // },
+      router.push({
+        name: 'noticedetail',
+        params: {
+          id: state.posts.id,
+        }
+      })
+    }
+
+    onMounted(() => {
+      getpost()
+    })
+    return { state, getpost, update }
+
   }
 }
 </script>
