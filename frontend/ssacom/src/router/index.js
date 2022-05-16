@@ -41,6 +41,31 @@ const routes = [
     component: () => import('../views/NoticeUpdate.vue'),
   },
   {
+    path: '/qna',
+    name: 'qna',
+    component: () => import('../views/QnaView.vue'),
+  },
+  {
+    path: '/qna/create',
+    name: 'qnacreate',
+    component: () => import('../views/QnaCreate.vue'),
+  },
+  {
+    path: '/qna/:id',
+    name: 'qnadetail',
+    component: () => import('../views/QnaDetail.vue'),
+  },
+  {
+    path: '/qna/update/:id',
+    name: 'qnaupdate',
+    component: () => import('../views/QnaUpdate.vue'),
+  },
+  {
+    path : '/faq',
+    name : 'faq',
+    component: () => import('../views/FaqView.vue')
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: () => import('../views/MyPage.vue')
