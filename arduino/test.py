@@ -18,8 +18,9 @@ async def connect():
 
     # 웹 소켓에 접속.
     room_name = input('접속할 방의 이름 : ')
-    async with websockets.connect("ws://localhost:8000/ws/" + room_name +"/") as websocket:
-
+    # async with websockets.connect("ws://localhost:8000/ws/" + room_name +"/") as websocket:
+    async with websockets.connect("ws://k6s105.p.ssafy.io:8004/ws/" + room_name +"/") as websocket:
+        
         str = input('웹소켓으로 전송할 내용을 입력[종료하려면 quit 입력!]: ')     # 사용자의 입력을 변수에 저장
         #print(str)  # 변수의 내용을 출력
 
