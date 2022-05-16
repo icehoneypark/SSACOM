@@ -3,10 +3,9 @@ from .models import Qna, Review
 
 
 class QnaSerializer(serializers.ModelSerializer):
-    
     class Meta:
         model = Qna
-        fields = ('id', 'title', 'content', 'category', 'created_at', 'updated_at')
+        fields = ('id', 'title', 'content', 'category', 'created_at', 'updated_at', 'user')
 
 class ReviewSerializer(serializers.ModelSerializer):
     
