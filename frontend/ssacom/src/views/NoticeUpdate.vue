@@ -18,6 +18,9 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive, } from "vue";
 
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+
 export default {
   name : 'NoticeUpdate',
   setup() {
@@ -33,7 +36,7 @@ export default {
     const getpost = () => {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/notices/${state.id}`,
+        url: `${baseURL}notices/${state.id}`,
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
@@ -56,7 +59,7 @@ export default {
       }
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        url: `${baseURL}notices/${state.id}/`,
         data: noticeData,
         headers: {Authorization : `JWT ${token}`},
       })

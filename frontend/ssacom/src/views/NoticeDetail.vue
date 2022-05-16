@@ -15,6 +15,9 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+
 export default {
   name : 'NoticeDetail',
   setup() {
@@ -29,7 +32,7 @@ export default {
     const getpost = () => {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/notices/${state.id}`,
+        url: `${baseURL}notices/${state.id}`,
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
@@ -45,7 +48,7 @@ export default {
     const Delete = () => {
       axios({
         method: 'delete',
-        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        url: `${baseURL}notices/${state.id}/`,
         headers: {Authorization : `JWT ${token}`},
       })
       .then(res => {
@@ -60,7 +63,7 @@ export default {
     const update = () => {
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        url: `${baseURL}notices/${state.id}/`,
         data: state.post,
         headers: {Authorization : `JWT ${token}`},
       })

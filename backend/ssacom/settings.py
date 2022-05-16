@@ -36,8 +36,10 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+    'dashboard',
 
     # else
+    'channels',
     'corsheaders',
     'rest_framework',
     'django_extensions',
@@ -80,29 +82,39 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'ssacom.asgi.application'
 WSGI_APPLICATION = 'ssacom.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('k6s105.p.ssafy.io', 6379)],
+        },
+    },
+}
 
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'ssacom',
-#         'USER': 'root',
-#         'PASSWORD': 'tkvlrnal',
-#         'HOST': 'localhost',
-#         'PORT': '3306'
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'ssacom',
+        'USER': 'root',
+        'PASSWORD': 'tkvlrnal',
+        'HOST': 'k6s105.p.ssafy.io',
+        'PORT': '3306'
+    }
+}
 
 
 # Password validation
