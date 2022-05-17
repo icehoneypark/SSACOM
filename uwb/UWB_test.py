@@ -99,12 +99,15 @@ def readThread(ser):
 
     while 1:
 
-        #tmp_data = ser.read().hex()
+        tmp_data = ser.read()
         
         # print("count = {}".format(count))
 
-        # print(tmp_data, end=" ")
+        print(tmp_data, end=" ")
         count += 1
+        if count % 40 == 0:
+            print("")
+        """
         tmp_data = ser.read(963).hex()
 
         # real_data = list(tmp_data[4:1924])
@@ -126,7 +129,7 @@ def readThread(ser):
             print(real_real_data[idx * 10 : idx * 10 + 10])
 
         real_real_data = list()
-
+        """
         # ser.read_all()
         # print(data_960)
         if len(data_80) > 80:
@@ -152,6 +155,7 @@ def readThread(ser):
 ser = serial.Serial(
 	port='COM6',
 	baudrate = 115200,
+	#baudrate = 921600,
 	parity=serial.PARITY_NONE,
 	stopbits=serial.STOPBITS_ONE,
 	bytesize=serial.EIGHTBITS
