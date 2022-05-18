@@ -42,15 +42,18 @@ ser = serial.Serial(
     bytesize=serial.EIGHTBITS,
 )
 
-ser.write(packet)
 temp = time.time()
-while 1:
-    if(ser.read() == b'S'):
-        if(ser.read() == b'\xf2'):
-            print(ser.read(13).hex())
-            break
-print('버퍼 비우고 새로 찾는 시간 :', time.time()-temp)
 
+def ser_start():
+    ser.write(packet)
+    while 1:
+        if(ser.read() == b'S'):
+            if(ser.read() == b'\xf2'):
+                print(ser.read(13).hex())
+                break
+    #print('버퍼 비우고 새로 찾는 시간 :', time.time()-temp)
+
+ser_start()
 
 result = []
 start = time.time()
@@ -59,12 +62,15 @@ res = deque()
 for _ in range(2):
     res.append([0 for _ in range(40)])
 
-for _ in range(20):
+for act in range(1, 1001):
+    print("act = {}".format(act))
+# for _ in range(1000):
     while 1:
         if(ser.read().hex() == "53"):
             if(ser.read().hex() == "f3"):
-                print(ser.read().hex())
-                break
+                # print(ser.read().hex())
+                if(ser.read().hex() == "06"):
+                    break
     #print(ser.read(3).hex())
     data = list()
     count = 0
@@ -95,8 +101,14 @@ for _ in range(20):
             # plt.pause(0.05)
 
         if count == 12:
-            trash = ser.read_all()
+            ser.read(963)
+            ser.read(963)
+        #     trash = ser.read_all()
             break
+    if act % 20 == 0:
+        ser.read_all()
+        # ser_start()
+        
 
 print(time.time() - start)
 plt.colorbar()

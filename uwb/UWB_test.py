@@ -7,6 +7,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 
+def ser_start():
+	ser.write(packet)
+
+	while 1:
+		if(ser.read() == b'S'):
+			if(ser.read() == b'\xf2'):
+				print(ser.read(13).hex())
+				break
+
 #라인 단위로 데이터 가져올 리스트 변수
 line = list()
 tmp = list()
@@ -30,130 +39,9 @@ packet.append(0x4e)#N
 packet.append(0x8B)#CHECKSUM
 packet.append(0x45)#ETX:E
 
-exitThread = False
-
-#데이터 처리할 함수
-def parsing_data(datas):
-    global line, count
-    # 리스트 구조로 들어 왔기 때문에
-    # 작업하기 편하게 스트링으로 합침
-
-    
-
-    #출력!
-    print("******** {} ***********".format(count))
-    count += 1
-
-    """
-    for idx in range(20):
-        data = datas[idx * 4 + 2] + datas[idx * 4 + 3]
-        line.append(data)
-        data = datas[idx * 4] + datas[idx * 4 + 1]
-        line.append(data)
-    """
-
-    #print(line[:10])
-    #print(line[10:20])
-    #print(line[20:30])
-    #print(line[30:40])
-
-
-    """
-    # normalize
-    x = list()
-    for _ in range(4):
-        for idx in range(10):
-            x.append(idx)
-
-    x_array = np.array(x)
-
-    y_array = np.array(line)
-
-    normalized_arr = preprocessing.normalize([y_array])
-    plt.scatter(x_array, y_array)
-    plt.show()
-    """
-
-#본 쓰레드
-def readThread(ser):
-    global line, tmp
-    global exitThread
-    global packet, status
-    global count
-
-    #ser.flush()
-    #ser.flushInput()
-    #ser.flushOutput()
-    # ser.read_all()
-    # ser.write(packet)
-            
-    data_80 = deque()
-    real_data = list()
-    real_real_data = list()
-    ser.write(packet)
-    tmp_data = ser.read(15).hex()
-    print(tmp_data)
-    before = "45"
-
-    real_real_data = list()
-
-    while 1:
-
-        tmp_data = ser.read()
-        
-        # print("count = {}".format(count))
-
-        print(tmp_data, end=" ")
-        count += 1
-        if count % 40 == 0:
-            print("")
-        """
-        tmp_data = ser.read(963).hex()
-
-        # real_data = list(tmp_data[4:1924])
-    
-        real_data = list(tmp_data[6:])
-        
-        for idx in range(960):
-            data1 = real_data[idx] + real_data[idx + 1]
-            data2 = real_data[idx + 2] + real_data[idx + 3]
-
-            data = data2 + data1
-            #real_real_data.append(data)
-            real_real_data.append(int(data, 16))
-
-
-        print("========= {} =========".format(count))
-
-        for idx in range(int(len(real_real_data) / 10)):
-            print(real_real_data[idx * 10 : idx * 10 + 10])
-
-        real_real_data = list()
-        """
-        # ser.read_all()
-        # print(data_960)
-        if len(data_80) > 80:
-            
-            pass
-        """
-
-        """
-        if len(tmp_data) > 1:
-            pass
-
-        # count += 1
-        if count == 10:
-            break
-        
-        #parsing_data(tmp)
-
-        # line 변수 초기화
-        #del line[:]
-        #del tmp[:] 
-        
-
 ser = serial.Serial(
 	port='COM6',
+    #baudrate = 9600,
 	baudrate = 115200,
 	#baudrate = 921600,
 	parity=serial.PARITY_NONE,
@@ -161,4 +49,80 @@ ser = serial.Serial(
 	bytesize=serial.EIGHTBITS
 )
 
-readThread(ser)
+# 표 외부 설정
+plt.title("data viewer")
+plt.ylabel("count")
+plt.xlabel("length")
+
+"""
+ser.write(packet)
+
+while 1:
+    if(ser.read() == b'S'):
+        if(ser.read() == b'\xf2'):
+            print(ser.read(13).hex())
+            break
+"""
+
+ser_start()
+
+start = time.time()
+
+#print(ser.read(15).hex())
+
+#x = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+y = 0
+
+#cnt = 15
+
+#for _ in range(240):
+for act in range(1, 10000):
+	#print(ser.read(3).hex())
+	while 1:
+		if(ser.read().hex() == "53"):
+			if(ser.read().hex() == "f3"):
+				#ser.read().hex()
+				print(ser.read().hex(), end=" ")
+                print("act = {}".format(act))
+				break
+	#cnt += 3
+
+	data = list()
+	count = 0
+
+	#if cnt >= 14400:
+	#	break
+
+	while 1 :
+		tmp1 = ser.read().hex()
+		
+		tmp2 = ser.read().hex()
+
+		#cnt += 2
+
+		#if cnt >= 14400:
+		#	break
+
+		tmp = tmp2 + tmp1
+
+		tmp_int = int(tmp, 16)
+
+		data.append(tmp_int)
+
+			data = list()
+			count += 1
+			y += 1
+
+		if count == 12:
+			#ser.read_all()
+            ser.read(963)
+            ser.read(963)
+			break
+	if act % 80 == 0:
+		#trash = ser.read_all()
+		# ser_start()
+		
+print(time.time() - start)
+
+# 표 그리기
+plt.show()

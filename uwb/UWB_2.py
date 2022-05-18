@@ -75,15 +75,22 @@ y = 0
 
 #cnt = 15
 
-for _ in range(12):
-#for act in range(1, 101):
+#for _ in range(240):
+for act in range(1, 10001):
 	#print(ser.read(3).hex())
+	tmp_start = time.time()
+
 	while 1:
 		if(ser.read().hex() == "53"):
 			if(ser.read().hex() == "f3"):
 				ser.read().hex()
-				#print(ser.read().hex())
+				# print(ser.read().hex())
+				# print(ser.read().hex(), end=" ")
+				# print("act = {}".format(act))
+				print(act)
 				break
+	
+	
 	#cnt += 3
 
 	data = list()
@@ -109,19 +116,42 @@ for _ in range(12):
 		data.append(tmp_int)
 
 		if len(data) == 40:
-			print(data)
+			for idx in range(40):
+				if 0 <= data[idx] < 1000:
+					color = "black"
+				elif 1000 <= data[idx] < 2000:
+					color = "gray"
+				elif 2000 <= data[idx] < 3000:
+					color = "pink"
+				elif 3000 <= data[idx] < 4000:
+					color = "yellow"
+				else:
+					color = "blue"
+				# plt.plot(idx, y, marker='^', color=color)
+			# print(data)
 			data = list()
 			count += 1
 			y += 1
 
+
 		if count == 12:
-			#ser.read_all()
+			ser.read(963)
+			ser.read(963)
+			"""
+			if time.time() - tmp_start > 2:
+				ser.read_all()
+				ser_start()
+				print("restart")
+			"""
 			break
-	#if act % 100 == 0:
-	#	trash = ser.read_all()
-	#	ser_start()
-		
+	"""
+	if act % 1000 == 0:
+		ser.read_all()
+		ser_start()
+		print("setted")
+		pass
+	"""
 print(time.time() - start)
 
 # 표 그리기
-#plt.show()
+# plt.show()
