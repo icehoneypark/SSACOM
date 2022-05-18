@@ -1,7 +1,7 @@
 <template>
   <h1>update</h1>
-  <button @click="update">수정</button>
-  <div>
+  <div class="container">
+    <button @click="update">수정</button>
     <p>제목</p>
     <input 
     type="text"
@@ -32,8 +32,8 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive, } from "vue";
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'QnaUpdate',
@@ -102,5 +102,15 @@ export default {
 </script>
 
 <style>
-
+ .container{
+   border: 1px solid rgb(150, 150, 150);
+   width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+ }
+  h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
+ }
 </style>

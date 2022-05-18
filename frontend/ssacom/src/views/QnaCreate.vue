@@ -1,4 +1,5 @@
 <template>
+  <h1>QnA 작성</h1>
   <div class="container">
     <div class="card">
       <div class="card-body">
@@ -54,8 +55,8 @@ import { useRouter } from "vue-router"
 import { reactive } from "vue"
 import VueJwtDecode from 'vue-jwt-decode'
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'QnaCreate',
@@ -99,3 +100,16 @@ export default {
   }
 }
 </script>
+<style>
+ .container{
+   border: 1px solid rgb(150, 150, 150);
+   width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+ }
+  h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
+ }
+</style>

@@ -1,12 +1,10 @@
 <template>
   <div class="notice">
-    <h1>detail page</h1>
-  </div>
-  <div>
-    <button @click="update">수정</button>
-    <button @click="Delete">삭제</button>
+    <h1>상세보기</h1>
   </div>
   <div class="container">
+    <button @click="update">수정</button>
+    <button @click="Delete">삭제</button>
     <p>제목 : {{ state.post.title }}</p>
     <p>내용 : {{ state.post.content}}</p>
   </div>
@@ -17,8 +15,8 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'NoticeDetail',
@@ -97,5 +95,11 @@ export default {
    border: 1px solid rgb(150, 150, 150);
    width: 50em;
    height: 500px;
+   background-color: aliceblue;
+ }
+ h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
  }
 </style>

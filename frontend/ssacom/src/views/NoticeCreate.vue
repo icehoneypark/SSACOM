@@ -19,9 +19,7 @@
       v-model="state.content"
       placeholder="내용을 입력해 주세요"
     ></textarea>
-  </div>
-  <div>
-    <button @click="create" class="btn btn-success">작성</button>
+    <button @click="create">작성</button>
     <button @click="notice">목록</button>
   </div>
 
@@ -34,8 +32,8 @@ import axios from 'axios'
 import { useRouter } from "vue-router"
 import { reactive } from "vue"
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'NoticeCreate',
@@ -79,5 +77,12 @@ export default {
  .container{
    border: 1px solid rgb(150, 150, 150);
    width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+ }
+ h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
  }
 </style>

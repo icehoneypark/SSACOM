@@ -2,10 +2,9 @@
   <div class="qna">
     <h1>detail page</h1>
   </div>
-  <div>
+  <div class="container">
     <button @click="update">수정</button>
     <button @click="Delete">삭제</button>
-  </div>
   <p>제목 : {{ state.post.title }}</p>
   <p>내용 : {{ state.post.content}}</p>
   <p>카테고리: {{ state.post.category }}</p>
@@ -23,10 +22,11 @@
   <ul :key="index" v-for="(comm, index) in state.comment">
     <li>
       {{ comm.content }}
-      <button @click="commentUpdate(comm.id)">수정</button>
-      <button @click="commentDelete(comm.id)">삭제</button>
+      <!-- <button @click="commentUpdate(comm.id)">수정</button> -->
+      <button type="button" class="btn-close" aria-label="Close" @click="commentDelete(comm.id)"></button>
     </li>
   </ul>
+  </div>
 </template>
 
 <script>
@@ -34,8 +34,8 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'QnaDetail',
@@ -130,6 +130,7 @@ export default {
         headers: {Authorization : `JWT ${token}`},
       })
       .then(res => {
+        router.go(0)
         console.log(res)
       })
       .catch(err => {
@@ -145,6 +146,7 @@ export default {
       })
       .then(res => {
         console.log(res)
+        router.go(0)
       })
       .catch(err => {
         console.log(err)
@@ -175,3 +177,16 @@ export default {
 
 }
 </script>
+<style>
+ .container{
+   border: 1px solid rgb(150, 150, 150);
+   width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+ }
+  h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
+ }
+</style>

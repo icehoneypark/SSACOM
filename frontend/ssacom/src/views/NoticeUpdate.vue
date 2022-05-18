@@ -1,6 +1,5 @@
 <template>
   <h1>update</h1>
-  <button @click="update" class="btn btn-success">수정</button>
   <div class="container">
     <p>제목</p>
     <input 
@@ -15,6 +14,7 @@
       class="form-control"
       v-model="state.posts.content"
     ></textarea>
+    <button @click="update">수정</button>
   </div>
 </template>
 
@@ -23,8 +23,8 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive, } from "vue";
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'NoticeUpdate',
@@ -96,5 +96,11 @@ export default {
    border: 1px solid rgb(150, 150, 150);
    width: 50em;
    height: 500px;
+   background-color: aliceblue;
+ }
+ h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
  }
 </style>
