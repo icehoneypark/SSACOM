@@ -35,15 +35,7 @@ pytz==2022.1
 service-identity==21.1.0
 six==1.16.0
 sqlparse==0.4.2
-<<<<<<< HEAD
-Twisted==22.4.0
-twisted-iocpsupport==1.0.2
-txaio==22.2.1
-typing_extensions==4.2.0
-zope.interface==5.4.0
-=======
 tzdata==2022.1
 urllib3==1.26.9
 channels==3.0.4
 channels-redis==3.4.0
->>>>>>> 8d96b1f5f97edd64a538dc58a861943f7f27abd0
