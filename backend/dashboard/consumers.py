@@ -59,6 +59,7 @@ class DataConsumer(WebsocketConsumer) :
         i += 1
         hour = 0 
         print('받은 데이터 :', humi, temp, hour)
+        print(i)
       
         serializer = tempSerializer(data = text_data_json)
 
@@ -67,7 +68,7 @@ class DataConsumer(WebsocketConsumer) :
             pre_temp = temp
             pre_humi = humi
             serializer.save()
-        if serializer.is_valid(raise_exception=True) and i == 1800 :
+        if serializer.is_valid(raise_exception=True) and i == 100 :
             i = 0
             hour = 1
             serializer.save()
