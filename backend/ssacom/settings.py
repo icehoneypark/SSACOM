@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-uam(c!4fddpxp*^$iuy332r_4nn950ooxy^@*jqbrtxn**z2*-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ['*']
+=======
+ALLOWED_HOSTS = ['0.0.0.0', 'websites', 'k6s105.p.ssafy.io', '127.0.0.1']
+>>>>>>> 8d96b1f5f97edd64a538dc58a861943f7f27abd0
 
 
 # Application definition
@@ -36,10 +40,18 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+<<<<<<< HEAD
     'chat',
 
     # else
     'channels',
+=======
+    'dashboard',
+
+    # else
+    'channels',
+    'corsheaders',
+>>>>>>> 8d96b1f5f97edd64a538dc58a861943f7f27abd0
     'rest_framework',
     'django_extensions',
     'django.contrib.admin',
@@ -65,6 +77,7 @@ CHANNEL_LAYERS = {
 # 여기까지 (ASGI_APPLICATION, CHANNEL_LAYERS)
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -73,6 +86,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'ssacom.urls'
 
@@ -92,7 +107,17 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'ssacom.asgi.application'
 WSGI_APPLICATION = 'ssacom.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('k6s105.p.ssafy.io', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -111,8 +136,12 @@ DATABASES = {
         'NAME': 'ssacom',
         'USER': 'ssacom',
         'PASSWORD': 'tkvlrnal',
+<<<<<<< HEAD
         # 'HOST': 'localhost',
         'HOST': '127.0.0.1',
+=======
+        'HOST': 'k6s105.p.ssafy.io',
+>>>>>>> 8d96b1f5f97edd64a538dc58a861943f7f27abd0
         'PORT': '3306'
     }
 }
@@ -134,6 +163,13 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+CORS_ALLOWED_ORIGINS = [
+	# 허용할 Origin 추가
+    "http://localhost:8080",
+    "http://k6s105.p.ssafy.io:8004"
+
 ]
 
 
@@ -162,3 +198,18 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'accounts.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+}
+
+import datetime
+
+JWT_AUTH = {
+   'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
+}
