@@ -1,6 +1,7 @@
 <template>
   <h1>update</h1>
   <div class="container">
+    <button @click="update">수정</button>
     <p>제목</p>
     <input 
     type="text"
@@ -14,7 +15,15 @@
       class="form-control"
       v-model="state.posts.content"
     ></textarea>
-    <button @click="update">수정</button>
+
+    <p>카테고리</p>
+    <textarea
+      type="text"
+      rows="5"
+      class="form-control"
+      v-model="state.posts.category"
+      placeholder="내용을 입력해 주세요"
+    ></textarea>
   </div>
 </template>
 
@@ -27,7 +36,7 @@ const baseURL = 'http://127.0.0.1:8000/'
 // const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
-  name : 'NoticeUpdate',
+  name : 'QnaUpdate',
   setup() {
     const router = useRouter()
     const route = useRoute()
@@ -41,7 +50,7 @@ export default {
     const getpost = () => {
       axios({
         method: 'get',
-        url: `${baseURL}notices/${state.id}`,
+        url: `${baseURL}qna/${state.id}`,
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
@@ -57,15 +66,16 @@ export default {
 
     const update = () => {
 
-      const noticeData = {
+      const qnaData = {
         id : state.posts.id,
         title: state.posts.title,
         content: state.posts.content,
+        category: state.posts.category,
       }
       axios({
         method: 'put',
-        url: `${baseURL}notices/${state.id}/`,
-        data: noticeData,
+        url: `${baseURL}qna/${state.id}/`,
+        data: qnaData,
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
@@ -75,7 +85,7 @@ export default {
             console.log(err)
           })
       router.push({
-        name: 'noticedetail',
+        name: 'qnadetail',
         params: {
           id: state.posts.id,
         }
@@ -98,7 +108,7 @@ export default {
    height: 500px;
    background-color: aliceblue;
  }
- h1{
+  h1{
    text-align: center;
    margin-top: 1em;
    margin-bottom: 1em;

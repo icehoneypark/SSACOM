@@ -1,8 +1,9 @@
 <template>
   <div class="shoplist">
     <p>업장 리스트</p>
+    <hr>
     <ul>
-      <li v-for="item in state.shoplist" :key="item"><a href="">{{item}}</a></li>
+      <li v-for="item in state.shoplist" :key="item"><router-link to="dashboard">{{item}}</router-link></li>
     </ul>
   </div>
 </template>
@@ -16,7 +17,7 @@ export default {
   setup() {
     // 변수
     const state = reactive({
-      shoplist: ["대림 목욕탕", "궁중 목욕탕", "테스트 목욕탕", "어쩌고 목욕탕", "저쩌고 목욕탕"],
+      shoplist: ["한솔 유치원", ],
     })
     // 라이프 사이클
     // onMounted(() => {
@@ -36,10 +37,13 @@ export default {
     border-radius: 20px;
     // margin-top: 20px;
     width: 300px;
-    height: 300px;
+    height: 650px;
     p {
-      font-size: 18px;
+      text-align: center;
+      font-size: 25px;
       font-weight: bold;
+      margin-bottom: 35px;
+      margin-top: 15px
 
     }
   }

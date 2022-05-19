@@ -5,4 +5,4 @@ class tempSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = temp
-        fields = ('temp', 'message')
+        fields = ('temp', 'message', 'created_at')

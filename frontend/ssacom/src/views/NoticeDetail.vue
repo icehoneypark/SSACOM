@@ -1,19 +1,22 @@
 <template>
   <div class="notice">
-    <h1>detail page</h1>
+    <h1>상세보기</h1>
   </div>
-  <div>
+  <div class="container">
     <button @click="update">수정</button>
     <button @click="Delete">삭제</button>
+    <p>제목 : {{ state.post.title }}</p>
+    <p>내용 : {{ state.post.content}}</p>
   </div>
-  <p>제목 : {{ state.post.title }}</p>
-  <p>내용 : {{ state.post.content}}</p>
 </template>
 
 <script>
 import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
+
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'NoticeDetail',
@@ -29,7 +32,7 @@ export default {
     const getpost = () => {
       axios({
         method: 'get',
-        url: `http://127.0.0.1:8000/notices/${state.id}`,
+        url: `${baseURL}notices/${state.id}`,
         headers: {Authorization : `JWT ${token}`},
       })
         .then(res => {
@@ -45,7 +48,7 @@ export default {
     const Delete = () => {
       axios({
         method: 'delete',
-        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        url: `${baseURL}notices/${state.id}/`,
         headers: {Authorization : `JWT ${token}`},
       })
       .then(res => {
@@ -60,7 +63,7 @@ export default {
     const update = () => {
       axios({
         method: 'put',
-        url: `http://127.0.0.1:8000/notices/${state.id}/`,
+        url: `${baseURL}notices/${state.id}/`,
         data: state.post,
         headers: {Authorization : `JWT ${token}`},
       })
@@ -85,72 +88,18 @@ export default {
     })
     return { state, Delete, update, getpost }
   }
-
-
-
-  // data : function () {
-  //   return {
-  //     id: this.$route.params.id,
-  //     posts: null,
-  //     token : localStorage.getItem('jwt')
-  //   }
-  // },
-  // computed: {
-  //   post : function () {
-  //     return this.posts.find(post => post.id === Number(this.id))
-  //   }
-  // },
-  // methods: {
-  //   Delete: function () {
-  //     axios({
-  //         method: 'delete',
-  //         url: `http://127.0.0.1:8000/notices/${this.id}/`,
-  //         headers: {Authorization : `JWT ${this.token}`},
-  //       })
-  //         .then(res => {
-  //           console.log(res)
-  //           this.$router.push("/notice")
-  //         })
-  //         .catch(err => {
-  //           console.log(err)
-  //         })
-  //   },
-  //   update: function () {
-  //     axios({
-  //       method: 'put',
-  //       url: `http://127.0.0.1:8000/notices/${this.id}/`,
-  //       data: this.post,
-  //       headers: {Authorization : `JWT ${this.token}`},
-  //     })
-  //       .then(res => {
-  //         console.log(res)
-  //         this.$router.push({
-  //       name: 'noticeupdate',
-  //       params: {
-  //         id: this.id,
-  //       }
-  //     })
-  //       })
-
-  //   },
-  //   getpost : function () {
-  //     axios({
-  //       method: 'get',
-  //       url: 'http://127.0.0.1:8000/notices/',
-  //       headers: {Authorization : `JWT ${this.token}`},
-  //     })
-  //       .then(res => {
-  //           console.log(res)
-  //           this.posts = res.data
-  //         })
-  //         .catch(err => {
-  //           console.log(err)
-  //         })
-  //   },
-    
-  // },
-  // created: function () {
-  //   this.getpost()
-  // },
 }
 </script>
+<style>
+ .container{
+   border: 1px solid rgb(150, 150, 150);
+   width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+ }
+ h1{
+   text-align: center;
+   margin-top: 1em;
+   margin-bottom: 1em;
+ }
+</style>

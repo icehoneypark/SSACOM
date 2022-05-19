@@ -46,6 +46,7 @@ import axios from 'axios';
 import { useStore } from "vuex"
 
 const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name: 'LoginView',

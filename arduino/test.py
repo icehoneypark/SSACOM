@@ -26,18 +26,19 @@ async def connect():
     #     bytesize=serial.EIGHTBITS,
     #     timeout=1,
     # )
-    async with websockets.connect("ws://localhost:8000/ws/" + room_name +"/") as websocket:
+    # async with websockets.connect("ws://localhost:8000/ws/" + room_name +"/") as websocket:
+    async with websockets.connect("ws://k6s105.p.ssafy.io:8004/ws/" + room_name +"/") as websocket:
 
         # str = input('웹소켓으로 전송할 내용을 입력[종료하려면 quit 입력!]: ')     # 사용자의 입력을 변수에 저장
         #print(str)  # 변수의 내용을 출력
 
         while 1:
 
-            while 1:
-                data = ser.read(1)
+            # while 1:
+            #     data = ser.read(1)
             # quit가 들어오기 전까지 계속 입력받은 문자열을 전송하고 에코를 수신
-            await websocket.send(json.dumps({'message': str}))
-            sleep(0.5)
+            await websocket.send(json.dumps({'message': 11, 'temp' : 11}))
+            sleep(2)
             # 웹 소켓 서버로 부터 메시지가 오면 콘솔에 출력
             # data = await websocket.recv()
             # print(data)

@@ -15,20 +15,20 @@ export default {
   },
 
   setup() {
-    const state = reactive({
-      data1: [15,32,22,45,11,22,33,44,8],
-      data2: [23,11,33,4,5,6,4,8,4],
-    })
-    const series = [
+    // const state = reactive({
+    //   data1: [15,32,22,45,11,22,33,44,8],
+    //   data2: [23,11,33,4,5,6,4,8,4],
+    // })
+    const series = reactive([
       {
         name: "남자",
-        data: state.data1
+        data: [15,32,22,45,11,22,33,44,8]
       },
       {
         name: "여자",
-        data: state.data2
+        data: [23,11,33,4,5,6,4,8,4]
       }
-    ]
+    ])
     const options = {
       chart: {
         height: 350,
@@ -53,7 +53,7 @@ export default {
         curve: 'smooth'
       },
       title: {
-        text: 'Real Time visitor Graph',
+        text: 'Temperature / Humidity',
         align: 'left'
       },
       grid: {
@@ -89,9 +89,12 @@ export default {
     }
 
     const getData = () => {
-      state.data1 = [15,22,23,24,25,36,24,28,14]
-      console.log(state.data1)
+      series[0].data = [15,22,23,24,25,36,24,28,14]
+      // series[0].data = [state.data1]
+      // console.log(series[0].data)
     }
+
+    
           
           
 
