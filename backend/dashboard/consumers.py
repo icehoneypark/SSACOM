@@ -66,6 +66,9 @@ class DataConsumer(WebsocketConsumer) :
             pre_humi = humi
             serializer.save()
 
+        if serializer.is_valid(raise_exception=True) and hour == 1 :
+            serializer.save()
+
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
         #     self.room_group_name,
