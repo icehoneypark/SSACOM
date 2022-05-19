@@ -1,26 +1,41 @@
 <template>
-  <h2>로그인</h2>
-  <div>
-    <div>
-      <label for="username">이름</label>
-      <input type="text"
-        id="username"
-        v-model="content.username"
-      >
+  <div class="container-fluid px-5 pt-5" style="width:30rem">
+    <div class="d-flex justify-content-center">
+      <div class="row">
+        <h2 class="d-flex justify-content-center my-3">로그인</h2>
+        <div>
+          <div class="input-group">
+            <span class="input-group-text">아이디</span>
+            <!-- <label for="username">아이디</label> -->
+            <input type="text"
+              class="form-control"
+              v-model="content.username"
+            >
+          </div>
+          <div class="input-group">
+            <span class="input-group-text">비밀번호</span>
+            <!-- <label for="password">비밀번호</label> -->
+            <input type="password"
+              class="form-control"
+              v-model="content.password"
+              @keyup.enter="login"
+              autocomplete="off"
+            >
+          </div>          
+        </div>
+        <!-- login 버튼 -->
+        <div>
+          <button style="width:100%;" class="btn btn-primary my-1" @click="login">로그인</button>
+        </div>
+        <!-- 아이디/비밀번호 찾는 페이지 -->
+        <div class="d-flex justify-content-end">
+          <a href="/findinfo">아이디/비밀번호가 기억나지 않으세요?</a>
+        </div>
+      </div>
     </div>
   </div>
-  <div>
-    <div>
-      <label for="password">비번</label>
-      <input type="password"
-        id="password"
-        v-model="content.password"
-        @keyup.enter="login"
-        autocomplete="off"
-      >
-    </div>
-  </div>
-  <button class="btn btn-sm btn-primary m-1" @click="login">로그인</button>
+
+  
 
 
 
@@ -28,7 +43,10 @@
 
 <script>
 import axios from 'axios';
+import { useStore } from "vuex"
+
 const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name: 'LoginView',
@@ -40,8 +58,7 @@ export default {
       },
       isCheck:false,
       isAlert:false,
-
-
+      store: useStore()
     }
   },
   watch : {
@@ -58,8 +75,12 @@ export default {
       })
       .then(res => {
         console.log(res)
+
+        // const store = useStore()
+        // store.dispatch('login')
         localStorage.setItem('jwt', res.data.token)
-        this.$router.push({ name : 'home' })
+        this.$router.push({ name : 'mypage' })
+        this.store.dispatch('login')
         // if (res.data.Success){
         //   if (res.data) {
         //     console.log('여기는 then')
@@ -87,11 +108,12 @@ export default {
       if (this.$route.path!=='/Home') this.$router.push('/')
     }
   }
-
-
 }
 </script>
 
 <style>
+span {
+  width: 6rem;
+}
 
 </style>

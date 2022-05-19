@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from django.contrib.auth import get_user_model
 
 from .serializers import QnaSerializer, ReviewSerializer
 from .models import Qna, Review
@@ -10,7 +11,7 @@ from .models import Qna, Review
 ###########
 ### QnA ###
 ###########
-
+# @login_required
 @api_view(['GET', 'POST'])
 def qna_list_create(request):
     if request.method == 'GET':
@@ -22,7 +23,6 @@ def qna_list_create(request):
     elif request.method == 'POST':
         serializer = QnaSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            # serializer.save(user=request.user)
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
@@ -65,9 +65,9 @@ def review_list_create(request, qna_id):
         # request.data['qna'] = Qna.objects.filter(pk=qna_id)[0]
         # request.data['qna'] = qna_id
         serializer = ReviewSerializer(data=request.data)
-        # serializer.qna = qna
+        serializer.qna = qna
         print('one')
-        print(serializer)
+        print(serializer.qna)
         if serializer.is_valid(raise_exception=True):
             print('two')
             serializer.save(qna=qna)

@@ -5,4 +5,4 @@ class noticesSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = notices
-        fields = ('id', 'title', 'content')
+        fields = ('id', 'title', 'content', 'created_at')
