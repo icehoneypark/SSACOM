@@ -39,6 +39,10 @@
 import router from '@/router'
 import { reactive } from '@vue/reactivity'
 import axios from 'axios'
+
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+
 export default {
   setup() {
     const state = reactive({
@@ -87,7 +91,7 @@ export default {
       if (credentials.username != '' && credentials.password != '' && credentials.passwordConfirmation != '' && credentials.email != '' && credentials.phonenumber != ''){
         axios({
           method: 'post',
-          url: 'http://127.0.0.1:8000/accounts/signup/',
+          url: `${baseURL}accounts/signup/`,
           data: credentials
         })
         .then((res) => {

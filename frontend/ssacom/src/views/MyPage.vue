@@ -70,6 +70,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import VueJwtDecode from 'vue-jwt-decode';
 
+const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default ({
   components: {ShopList},
@@ -123,7 +125,7 @@ export default ({
       }
       axios({
         method: 'put',
-        url: `http://localhost:8000/accounts/userchange/${info.user_id}/`,
+        url: `${baseURL}accounts/userchange/${info.user_id}/`,
         data: data
       })
       .then((res) => {
@@ -131,7 +133,7 @@ export default ({
 
         axios({
           method: 'get',
-          url: `http://localhost:8000/accounts/${info.user_id}/`
+          url: `${baseURL}accounts/${info.user_id}/`
         })
         .then((res) => {
           console.log(res)
@@ -147,7 +149,7 @@ export default ({
       if(confirm('정말 탈퇴하시겠습니까?')){
         axios({
           method: 'delete',
-          url: `http://localhost:8000/accounts/userdelete/${info.user_id}`,
+          url: `${baseURL}accounts/userdelete/${info.user_id}`,
         })
         .then(() => {
           store.dispatch('logout')
@@ -167,7 +169,7 @@ export default ({
       console.log(typeof(test))
       axios({
         method: 'get',
-        url: `http://localhost:8000/accounts/${info.user_id}/`
+        url: `${baseURL}accounts/${info.user_id}/`
       })
       .then((res) => {
         console.log(res)
