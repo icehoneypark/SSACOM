@@ -6,10 +6,6 @@ from .serializers import tempSerializer
 pre_temp = 0
 pre_humi = 0
 class DataConsumer(WebsocketConsumer):
-<<<<<<< HEAD
-=======
-    
->>>>>>> eede113efcc48d83adc8d116a5df4aad7f358d45
     # 1. self.scope['url_route']['kwargs']['room_name']
     #   - self.scope : 각 Consumer 에서 연결정보를 가지고 있는 변수
     #   - 위 코드 처럼 작성하는 경우, room_name(group name)을 얻어올 수 있다.
