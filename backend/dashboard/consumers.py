@@ -60,7 +60,7 @@ class DataConsumer(WebsocketConsumer) :
         serializer = tempSerializer(data = text_data_json)
 
         
-        if serializer.is_valid(raise_exception=True) and pre_temp != temp and pre_humi != humi :
+        if serializer.is_valid(raise_exception=True) and (pre_temp != temp or pre_humi != humi) :
             pre_temp = temp
             pre_humi = humi
             serializer.save()
