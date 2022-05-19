@@ -5,6 +5,7 @@ from channels.generic.websocket import WebsocketConsumer
 from .serializers import tempSerializer
 pre_temp = 0
 pre_humi = 0
+i = 0
 class DataConsumer(WebsocketConsumer) :
     # 1. self.scope['url_route']['kwargs']['room_name']
     #   - self.scope : 각 Consumer 에서 연결정보를 가지고 있는 변수
@@ -50,12 +51,13 @@ class DataConsumer(WebsocketConsumer) :
     # Receive message from WebSocket
     def receive(self, text_data):
         # data를 json형태로 받아서 메시지 부분을 파싱
-        global pre_temp , pre_humi
+        global pre_temp , pre_humi ,i
         text_data_json = json.loads(text_data)
         humi = text_data_json['message']
         temp = text_data_json['temp']
         hour = text_data_json['hour']
-        
+        i += 1
+        hour = 0 
         print('받은 데이터 :', humi, temp, hour)
       
         serializer = tempSerializer(data = text_data_json)
@@ -65,7 +67,9 @@ class DataConsumer(WebsocketConsumer) :
             pre_temp = temp
             pre_humi = humi
             serializer.save()
-        if serializer.is_valid(raise_exception=True) and hour == 1 :
+        if serializer.is_valid(raise_exception=True) and i == 1800 :
+            i = 0
+            hour = 1
             serializer.save()
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
