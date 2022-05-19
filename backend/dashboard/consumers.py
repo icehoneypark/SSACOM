@@ -54,8 +54,9 @@ class DataConsumer(WebsocketConsumer) :
         text_data_json = json.loads(text_data)
         humi = text_data_json['message']
         temp = text_data_json['temp']
+        hour = text_data_json['hour']
         
-        print('받은 데이터 :', humi, temp)
+        print('받은 데이터 :', humi, temp, hour)
       
         serializer = tempSerializer(data = text_data_json)
 
@@ -63,6 +64,8 @@ class DataConsumer(WebsocketConsumer) :
         if serializer.is_valid(raise_exception=True) and (pre_temp != temp or pre_humi != humi) :
             pre_temp = temp
             pre_humi = humi
+            serializer.save()
+        if serializer.is_valid(raise_exception=True) and hour == 1 :
             serializer.save()
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
