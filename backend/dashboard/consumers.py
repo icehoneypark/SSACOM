@@ -3,8 +3,9 @@ import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 from .serializers import tempSerializer
-
-class DataConsumer(WebsocketConsumer):
+pre_temp = 0
+pre_humi = 0
+class DataConsumer(WebsocketConsumer) :
     # 1. self.scope['url_route']['kwargs']['room_name']
     #   - self.scope : 각 Consumer 에서 연결정보를 가지고 있는 변수
     #   - 위 코드 처럼 작성하는 경우, room_name(group name)을 얻어올 수 있다.
@@ -49,15 +50,19 @@ class DataConsumer(WebsocketConsumer):
     # Receive message from WebSocket
     def receive(self, text_data):
         # data를 json형태로 받아서 메시지 부분을 파싱
+        global pre_temp , pre_humi
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        humi = text_data_json['message']
         temp = text_data_json['temp']
-        print('받은 데이터 :', message, temp)
+        
+        print('받은 데이터 :', humi, temp)
       
         serializer = tempSerializer(data = text_data_json)
 
         
-        if serializer.is_valid(raise_exception=True):
+        if serializer.is_valid(raise_exception=True) and (pre_temp != temp or pre_humi != humi) :
+            pre_temp = temp
+            pre_humi = humi
             serializer.save()
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
@@ -67,6 +72,8 @@ class DataConsumer(WebsocketConsumer):
         #         'message': message
         #     }
         # )
+        
+        
 
     # Receive message from room group
     def chat_message(self, event):
