@@ -3,8 +3,20 @@ import tensorflow as tf
 import time
 import numpy as np
 
+from tensorflow import keras
+
+# 헬퍼(helper) 라이브러리를 임포트합니다
+def min_pooling(arr):
+    x, y = arr.shape
+    new_x, new_y = x//2 , y//2
+
+    arr = np.min(arr.reshape(new_x, 2, y, 1), axis = (1,3))
+    return arr
+
+# print(min_pooling(arr))
+
+
 start = time.time()
-# import numpy as np
 ## 0명 재실 데이터 불러오기 
 f1 = open("no_data.csv", "r")
 no_reader = csv.reader(f1)
@@ -39,40 +51,62 @@ y_datas = [0] * (int(len(full_datas) / 2))
 y2_datas = [1] * (int(len(full_datas) / 2))
 y_datas.extend(y2_datas)
 
-## 학습 시작
-print("start")
+# fashion_mnist = keras.datasets.fashion_mnist
 
-# 학습 모델입니다 딥러닝(인공신경망)방식으로 여러줄에 걸쳐 진행합니다 많을수록 정확하겠지만 오래걸리겠죠
-model = tf.keras.Sequential()
-#flatten으로 데이터를 1줄로 펴서 학습합니다 원래는 정사각형
-model.add(tf.keras.layers.Flatten(input_shape=(12,40)))
 
-model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
-print(model.summary())
+# (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
-x_train = full_datas
+train_images = np.array(full_datas)
 
-x_test = full_datas
+test_images = np.array(full_datas)
 
-y_train = y_datas
+train_labels = np.array(y_datas)
 
-y_test = y_datas
+test_labels = np.array(y_datas)
 
-model.fit(x_train, y_train, validation_data=(x_test, y_test), epochs=10000)
 
-test_loss, test_acc = model.evaluate(x_test, y_test)
+# class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
+            #    'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
-print('test_loss =', test_loss)
-print('test_acc =', test_acc)
+print(train_images.shape)
 
-predictions = model.predict(x_test)
 
-print('y_test =', y_test[:10],", ", y_test[5000:5010])
-print('predictions =', np.argmax(predictions[:10], axis=1))
-print('predictions =', np.argmax(predictions[5000:5010], axis=1))
+print(len(train_images))
 
-# 모델 저장
-model.save('uwb_model.h5')
-print("time = {}".format(time.time() - start))
-print('finished')
+# print(train_labels)
+
+print(train_labels.shape)
+
+print(len(train_labels))
+
+# train_images = train_images / 255.0
+
+# train_images = train_images / 2538.0
+
+# test_images = test_images / 255.0
+
+# test_images = test_images / 2538.0
+
+
+
+model = keras.Sequential([
+    keras.layers.Flatten(input_shape=(12, 40)),
+    keras.layers.Dense(128, activation='relu'),
+    keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer='adam',
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
+
+model.fit(train_images, train_labels, epochs=10)
+
+test_loss, test_acc = model.evaluate(test_images,  test_labels, verbose=2)
+
+print('\n테스트 손실율:', test_loss)
+
+print('\n테스트 정확도:', test_acc)
+
+print(model.predict(test_images[:10]))
+print(model.predict(test_images[5880:5890]))

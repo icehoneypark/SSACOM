@@ -46,7 +46,7 @@ model.compile(loss="mse")
 
 ## 학습 시작
 print("start")
-model.fit(full_datas, y_datas, epochs=15000, verbose=0)
+model.fit(full_datas, y_datas, epochs=20, verbose=0)
 
 # 학습된 모델을 가져오는 방식이 2가지입니다
 # 1. 모델전체를 저장하는방법
@@ -56,5 +56,7 @@ model.get_weights()
 
 # 모델 저장
 model.save('uwb_model.h5')
+
 print("time = {}".format(time.time() - start))
+
 print('finished')

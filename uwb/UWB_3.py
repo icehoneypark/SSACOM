@@ -12,7 +12,7 @@ from matplotlib.animation import FuncAnimation
 # from collections import deque
 
 # 라인 단위로 데이터 가져올 리스트 변수
-
+z
 count = 0
 # packet 정보
 packet = bytearray()

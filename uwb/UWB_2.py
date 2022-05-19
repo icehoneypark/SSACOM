@@ -7,6 +7,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 
+time.sleep(20)
+
 def ser_start():
 	ser.write(packet)
 
@@ -76,7 +78,7 @@ y = 0
 #cnt = 15
 
 #for _ in range(240):
-for act in range(1, 10001):
+for act in range(1, 49):
 	#print(ser.read(3).hex())
 	tmp_start = time.time()
 
@@ -127,7 +129,7 @@ for act in range(1, 10001):
 					color = "yellow"
 				else:
 					color = "blue"
-				# plt.plot(idx, y, marker='^', color=color)
+				plt.plot(idx, y, marker='^', color=color)
 			# print(data)
 			data = list()
 			count += 1
@@ -154,4 +156,4 @@ for act in range(1, 10001):
 print(time.time() - start)
 
 # 표 그리기
-# plt.show()
+plt.show()

@@ -9,8 +9,17 @@ import matplotlib.pyplot as plt
 from collections import deque
 
 print("go!")
-time.sleep(10)
+time.sleep(60)
 print("waked up")
+
+def min_pooling(arr):
+    x, y = arr.shape
+    # new_x, new_y = x//2 , y//2
+    new_x, new_y = x//10 , y//10
+
+    # arr = np.min(arr.reshape(new_x, 2, y, 1), axis = (1,3))
+    arr = np.min(arr.reshape(new_x, 10, y, 1), axis = (1,3))
+    return arr
 
 ## csv 파일에 들어갈 데이터
 data = list()
@@ -71,7 +80,7 @@ start = time.time()
 y = 0
 
 # for _ in range(12):
-for act in range(1, 5001):
+for act in range(1, 101):
 	#print(ser.read(3).hex())
 	while 1:
 		if(ser.read().hex() == "53"):
@@ -113,6 +122,8 @@ for act in range(1, 5001):
 
 
 ## 데이터 작성
+# data = np.array(data)
+# data = min_pooling(data)
 writer.writerows(data)
 f.close()
 

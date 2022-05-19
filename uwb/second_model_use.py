@@ -45,10 +45,8 @@ for on_raw in on_raws:
         full_datas.append(tmp)
         tmp = list()
         
-x_train = full_datas
+x_train = np.array(full_datas).astype(np.int64)
 
-x_ex = np.array(x_train)
-x_train = x_ex.astype(np.int64)
 
 #모델을 불러옵니다(import 잊지마세요)
 model = load_model('test.h5')

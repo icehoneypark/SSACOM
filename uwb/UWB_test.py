@@ -7,6 +7,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import deque
 
+
+time.sleep(10)
+
 def ser_start():
 	ser.write(packet)
 
@@ -74,16 +77,16 @@ start = time.time()
 y = 0
 
 #cnt = 15
-
+# for _ in range(12):
 #for _ in range(240):
-for act in range(1, 10000):
+for act in range(1, 13):
 	#print(ser.read(3).hex())
 	while 1:
 		if(ser.read().hex() == "53"):
 			if(ser.read().hex() == "f3"):
-				#ser.read().hex()
-				print(ser.read().hex(), end=" ")
-                print("act = {}".format(act))
+				ser.read().hex()
+				# print(ser.read().hex(), end=" ")
+				# print("act = {}".format(act))
 				break
 	#cnt += 3
 
@@ -91,6 +94,7 @@ for act in range(1, 10000):
 	count = 0
 
 	#if cnt >= 14400:
+
 	#	break
 
 	while 1 :
@@ -109,20 +113,24 @@ for act in range(1, 10000):
 
 		data.append(tmp_int)
 
+		if len(data) == 40:
+			print(data, end=",")
+			print("")
+
 			data = list()
 			count += 1
 			y += 1
 
 		if count == 12:
 			#ser.read_all()
-            ser.read(963)
-            ser.read(963)
+			ser.read(963)
+			ser.read(963)
 			break
 	if act % 80 == 0:
 		#trash = ser.read_all()
 		# ser_start()
-		
+		pass
 print(time.time() - start)
 
 # 표 그리기
-plt.show()
+# plt.show()
