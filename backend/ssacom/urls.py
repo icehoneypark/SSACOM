@@ -22,4 +22,5 @@ urlpatterns = [
     path('faq/', include('faq.urls')),
     path('qna/', include('qna.urls')),
     path('notices/', include('notices.urls')),
+    path('dashboard/', include('dashboard.urls')),
 ]
