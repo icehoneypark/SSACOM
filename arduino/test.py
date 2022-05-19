@@ -3,8 +3,10 @@ import json
 from time import sleep
 # 웹 소켓 모듈을 선언한다.
 import websockets
+# 시리얼 통신에 필요
+import serial
 
-# **** 실행전에 터미널창에 [ docker run -p 6379:6379 -d redis:2.8 ] 입력 ****
+# **** 실행전에 터미널창에 [ docker run -p 6379:6379 -d redis:5 ] 입력 ****
 
 
 # ----------------------------------------------------------------------------------------------//
@@ -17,14 +19,22 @@ import websockets
 async def connect():
 
     # 웹 소켓에 접속.
-    room_name = input('접속할 방의 이름 : ')
+    room_name = 'data'
+    # ser = serial.Serial(
+    #     port = 'COM7',
+    #     baudrate = 115200,
+    #     bytesize=serial.EIGHTBITS,
+    #     timeout=1,
+    # )
     async with websockets.connect("ws://localhost:8000/ws/" + room_name +"/") as websocket:
 
-        str = input('웹소켓으로 전송할 내용을 입력[종료하려면 quit 입력!]: ')     # 사용자의 입력을 변수에 저장
+        # str = input('웹소켓으로 전송할 내용을 입력[종료하려면 quit 입력!]: ')     # 사용자의 입력을 변수에 저장
         #print(str)  # 변수의 내용을 출력
 
-        while str != 'quit':
+        while 1:
 
+            while 1:
+                data = ser.read(1)
             # quit가 들어오기 전까지 계속 입력받은 문자열을 전송하고 에코를 수신
             await websocket.send(json.dumps({'message': str}))
             sleep(0.5)

@@ -2,6 +2,7 @@
 import json
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from .serializers import tempSerializer
 
 class DataConsumer(WebsocketConsumer):
     # 1. self.scope['url_route']['kwargs']['room_name']
@@ -49,8 +50,17 @@ class DataConsumer(WebsocketConsumer):
     def receive(self, text_data):
         # data를 json형태로 받아서 메시지 부분을 파싱
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        print('받은 데이터 :', message)
+        # message = text_data_json['message']
+        # temp = text
+        # print('받은 데이터 :', message)
+        # serializer = tempSerializer(data = { 'temp': temp, 'message':message})
+        serializer = tempSerializer(data = text_data_json)
+        # serializer = tempSerializer(data = text_data)
+
+        
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
         #     self.room_group_name,
