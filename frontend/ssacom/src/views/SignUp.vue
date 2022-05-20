@@ -4,12 +4,14 @@
       <h3>계정정보</h3>
       <p>아이디</p>
       <input @input="onUsername" type="text" placeholder="">
-      <button class="btn btn-primary">중복확인</button>
+      <!-- <button class="btn btn-primary">중복확인</button> -->
       <br>
-      <span>비밀번호</span><span class="pw-check">영문자와 숫자를 섞어주세요</span>
+      <p>비밀번호</p>
+      <!-- <span class="pw-check">영문자와 숫자를 섞어주세요</span> -->
       <input @input="onPassword" type="password" placeholder="">
       <br>
-      <span>비밀번호 확인</span><span class="pw-confirm">비밀번호가 일치하지 않습니다.</span>
+      <p>비밀번호 확인</p>
+      <!-- <span class="pw-confirm">비밀번호가 일치하지 않습니다.</span> -->
       <input @input="onPasswordConfirmation" type="password" placeholder="">
       <br>
       <hr>
@@ -39,13 +41,17 @@
 import router from '@/router'
 import { reactive } from '@vue/reactivity'
 import axios from 'axios'
+
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+
 export default {
   setup() {
     const state = reactive({
       username: '',
       email: '',
       phonenumber: '',
-      FullName: '',
+      fullName: '',
       password: '',
       password_confirmation: ''
     })
@@ -61,7 +67,7 @@ export default {
       state.phonenumber = e.target.value
     }
     const onFullName = (e) => {
-      state.FullName = e.target.value
+      state.fullName = e.target.value
     }
     const onPassword = (e) => {
       state.password = e.target.value
@@ -81,13 +87,13 @@ export default {
         phonenumber: state.phonenumber,
         // address: state.address,
         email: state.email + mailVal,
-        fullname: state.fullname
+        fullname: state.fullName
       }
       console.log(credentials.email)
       if (credentials.username != '' && credentials.password != '' && credentials.passwordConfirmation != '' && credentials.email != '' && credentials.phonenumber != ''){
         axios({
           method: 'post',
-          url: 'http://127.0.0.1:8000/accounts/signup/',
+          url: `${baseURL}accounts/signup/`,
           data: credentials
         })
         .then((res) => {

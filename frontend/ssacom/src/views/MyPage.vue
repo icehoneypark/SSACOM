@@ -1,4 +1,5 @@
 <template>
+  <h1>> My Page</h1>
   <div class="mypage">
     <div class="wrapper">
       <div class="profile">
@@ -54,7 +55,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary" @click="saveChange">저장</button>
+            <button type="button" class="btn btn-primary" @click="saveChange" data-bs-dismiss="modal">저장</button>
           </div>
         </div>
       </div>
@@ -70,6 +71,8 @@ import { useRouter } from "vue-router";
 import { useStore } from "vuex";
 import VueJwtDecode from 'vue-jwt-decode';
 
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default ({
   components: {ShopList},
@@ -123,7 +126,7 @@ export default ({
       }
       axios({
         method: 'put',
-        url: `http://localhost:8000/accounts/userchange/${info.user_id}/`,
+        url: `${baseURL}accounts/userchange/${info.user_id}/`,
         data: data
       })
       .then((res) => {
@@ -131,7 +134,7 @@ export default ({
 
         axios({
           method: 'get',
-          url: `http://localhost:8000/accounts/${info.user_id}/`
+          url: `${baseURL}accounts/${info.user_id}/`
         })
         .then((res) => {
           console.log(res)
@@ -141,13 +144,14 @@ export default ({
         })
         })
       .catch((res) => console.log(res))
+      alert("개인정보 수정이 완료되었습니다.")
     }
 
     const userDelete = () => {
       if(confirm('정말 탈퇴하시겠습니까?')){
         axios({
           method: 'delete',
-          url: `http://localhost:8000/accounts/userdelete/${info.user_id}`,
+          url: `${baseURL}accounts/userdelete/${info.user_id}`,
         })
         .then(() => {
           store.dispatch('logout')
@@ -167,7 +171,7 @@ export default ({
       console.log(typeof(test))
       axios({
         method: 'get',
-        url: `http://localhost:8000/accounts/${info.user_id}/`
+        url: `${baseURL}accounts/${info.user_id}/`
       })
       .then((res) => {
         console.log(res)
@@ -175,6 +179,10 @@ export default ({
         state.username = res.data.username
         state.fullname = res.data.fullname
         state.email = res.data.email
+        inputData.phonenumber = res.data.phonenumber
+        inputData.username = res.data.username
+        inputData.fullname = res.data.fullname
+        inputData.email = res.data.email
       })
       .catch((res) => {
         console.log(res)
@@ -187,12 +195,25 @@ export default ({
 </script>
 
 <style lang="scss" scoped>
+  h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
+  //  margin-bottom: 1em;
+   margin-top: 0;
+  //  border-bottom: 1px solid gray;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
+ }
   .mypage{ 
     padding: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(221, 221, 221);
+    // background-color: rgb(221, 221, 221);
     min-height: 100%;
   }
   .wrapper {

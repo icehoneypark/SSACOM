@@ -1,6 +1,6 @@
 <template>
-  <div class="container-fluid px-5 pt-5" style="width:30rem">
-    <div class="d-flex justify-content-center">
+  <div class="container-fluid px-5 pt-5 align-items-center" style="width:30rem; height: 100vh">
+    <div class="d-flex justify-content-center ">
       <div class="row">
         <h2 class="d-flex justify-content-center my-3">로그인</h2>
         <div>
@@ -45,7 +45,8 @@
 import axios from 'axios';
 import { useStore } from "vuex"
 
-const baseURL = 'http://127.0.0.1:8000/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name: 'LoginView',

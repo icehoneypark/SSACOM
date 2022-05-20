@@ -1,24 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
+
   {
     path: '/dashboard',
     name: 'dashboard',
     component: () => import('../views/DashboardView.vue')
-  },
-  {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
     path: '/notice',
@@ -41,6 +28,31 @@ const routes = [
     component: () => import('../views/NoticeUpdate.vue'),
   },
   {
+    path: '/qna',
+    name: 'qna',
+    component: () => import('../views/QnaView.vue'),
+  },
+  {
+    path: '/qna/create',
+    name: 'qnacreate',
+    component: () => import('../views/QnaCreate.vue'),
+  },
+  {
+    path: '/qna/:id',
+    name: 'qnadetail',
+    component: () => import('../views/QnaDetail.vue'),
+  },
+  {
+    path: '/qna/update/:id',
+    name: 'qnaupdate',
+    component: () => import('../views/QnaUpdate.vue'),
+  },
+  {
+    path : '/faq',
+    name : 'faq',
+    component: () => import('../views/FaqView.vue')
+  },
+  {
     path: '/mypage',
     name: 'mypage',
     component: () => import('../views/MyPage.vue')
@@ -51,11 +63,6 @@ const routes = [
     component: () => import('../views/LoginView.vue')
   },
   {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () => import('../views/DashboardView.vue') 
-  },
-  {
     path: '/findinfo',
     name: 'findinfo',
     component: () => import('../views/FindinfoView.vue')
@@ -64,11 +71,6 @@ const routes = [
     path : '/signup',
     name : 'signup',
     component: () => import('../views/SignUp.vue')
-  },
-  {
-    path : '/dashboard',
-    name : 'dashboard',
-    component: () => import('../views/DashboardView.vue')
   },
 ]
 
