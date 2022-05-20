@@ -2,7 +2,7 @@
 
 
 
-[싸콤 노션](https://ninth-tax-ce2.notion.site/c000cf794ec14a3e875947da995ed7ce)
+[싸콤 노션 / ERD / 목업 / 기능 명세서 / API 설계](https://ninth-tax-ce2.notion.site/c000cf794ec14a3e875947da995ed7ce)
 
 관련된 모든 자세한 사항은 notion에 정리되어 있다.
 
