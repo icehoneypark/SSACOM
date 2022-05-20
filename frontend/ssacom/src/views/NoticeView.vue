@@ -1,11 +1,11 @@
 <template>
   <div class="notice">
-    <h1>공지사항</h1>
+    <h1>> Notice</h1>
   </div>
-  <div class="container">
-    <button @click="create" type="button">글작성</button>
-    <button @click="getpost" type="button">새로고침</button>
-    <table class="table table-striped table-hover" >
+  <div class="container" style="overflow: auto;">
+    <button class="btn btn-primary" @click="create" type="button"><i class="fa-solid fa-pencil"></i> 글작성</button>
+    <button class="btn btn-secondary" @click="getpost" type="button"><i class="fa-solid fa-arrows-rotate"></i> 새로고침</button>
+    <table class="table table-striped table-hover"  >
       <thead>
         <tr>
           <th scope="col" style="width: 10%">#</th>
@@ -84,16 +84,27 @@ export default {
   },
 }
 </script>
-<style>
+<style lang="scss" scoped>
  .container{
-   border: 1px solid rgb(150, 150, 150);
+   border: 1px solid aliceblue;
+   border-radius: 15px;
    width: 50em;
    height: 500px;
    background-color: aliceblue;
+   padding: 30px;
+   box-shadow: 2px 2px 5px gray;
  }
   h1{
-   text-align: center;
-   margin-top: 1em;
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
    margin-bottom: 1em;
+   margin-top: 0;
+   border-bottom: 1px solid gray;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
  }
 </style>

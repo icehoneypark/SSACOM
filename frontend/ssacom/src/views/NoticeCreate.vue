@@ -1,6 +1,6 @@
 <template>
   <div class="notice">
-    <h1>create page</h1>
+    <h1>> Notice - Create</h1>
   </div>
   <div>
     </div>
@@ -11,16 +11,17 @@
     class="form-control"
     v-model="state.title"
     placeholder="제목을 입력해 주세요">
+    <br>
     <p>내용</p>
     <textarea
       type="text"
-      rows="5"
+      rows="11"
       class="form-control"
       v-model="state.content"
       placeholder="내용을 입력해 주세요"
     ></textarea>
-    <button @click="create">작성</button>
-    <button @click="notice">목록</button>
+    <button class="btn btn-secondary" @click="notice"><i class="fa-solid fa-rectangle-list"></i> 목록</button>
+    <button class="btn btn-success" @click="create"><i class="fa-solid fa-pencil"></i> 작성</button>
   </div>
 
 
@@ -75,14 +76,24 @@ export default {
 </script>
 <style>
  .container{
-   border: 1px solid rgb(150, 150, 150);
+   border: 1px solid aliceblue;
+   border-radius: 15px;
    width: 50em;
-   height: 500px;
+   height: 530px;
    background-color: aliceblue;
+   padding: 30px;
+   box-shadow: 2px 2px 5px gray;
  }
- h1{
-   text-align: center;
-   margin-top: 1em;
+  h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
    margin-bottom: 1em;
+   margin-top: 0;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
  }
 </style>

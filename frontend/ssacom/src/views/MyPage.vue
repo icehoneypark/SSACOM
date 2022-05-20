@@ -1,4 +1,5 @@
 <template>
+  <h1>> My Page</h1>
   <div class="mypage">
     <div class="wrapper">
       <div class="profile">
@@ -194,12 +195,25 @@ export default ({
 </script>
 
 <style lang="scss" scoped>
+  h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
+  //  margin-bottom: 1em;
+   margin-top: 0;
+  //  border-bottom: 1px solid gray;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
+ }
   .mypage{ 
     padding: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
-    background-color: rgb(221, 221, 221);
+    // background-color: rgb(221, 221, 221);
     min-height: 100%;
   }
   .wrapper {

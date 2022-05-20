@@ -1,6 +1,5 @@
 <template>
-  <h1>Dashboard</h1>
-  <hr>
+  <h1>> Dashboard</h1>
 <div class="body">
   <div class="tempgraph">
     <real-time-graph></real-time-graph>
@@ -32,9 +31,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  h1 {
-    font-weight: 900;
-  }
+  h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
+   margin-bottom: 1em;
+   margin-top: 0;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
+ }
 
   .tempgraph {
     width: 100%;
