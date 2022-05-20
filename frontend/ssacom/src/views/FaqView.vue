@@ -1,5 +1,5 @@
 <template>
-  <h1>FAQ</h1>
+  <h1>> FAQ</h1>
   <div class=" container">
     <div class="accordion accordion-flush" id="accordionFlushExample">
       <div class="accordion-item">
@@ -43,17 +43,32 @@ export default {
 }
 </script>
 
-<style>
-  .container{
-    border: 1px solid rgb(150, 150, 150);
-    width: 50em;
-    height: 500px;
-    background-color: aliceblue;
+<style lang="scss" scoped>
+ .container{
+   border: 1px solid aliceblue;
+   border-radius: 15px;
+   width: 50em;
+   min-height: 500px;
+   height: auto;
+   background-color: aliceblue;
+   padding: 30px;
+   box-shadow: 2px 2px 5px gray;
+ }
+  h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
+   margin-bottom: 1em;
+   margin-top: 0;
+   border-bottom: 1px solid gray;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
  }
 
- h1{
-   text-align: center;
-   margin-top: 1em;
-   margin-bottom: 1em;
+ .accordion-collapse {
+   min-height: 300px;
  }
 </style>
