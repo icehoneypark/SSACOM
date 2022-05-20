@@ -17,8 +17,8 @@ import VueApexCharts from 'vue3-apexcharts'
 import axios from 'axios'
 import { onMounted, onUnmounted } from '@vue/runtime-core'
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 const websocket = new WebSocket("ws://localhost:8000/ws/data/");
 
@@ -37,14 +37,14 @@ export default {
     const series = reactive([
       {
         name: "온도",
-        data: [15,32,22,45,11,22,33,44,8]
+        data: []
       },
       {
         name: "습도",
-        data: [23,11,33,4,5,6,4,8,4]
+        data: []
       }
     ])
-    const options = {
+    const options = reactive({
       chart: {
         height: 350,
         type: 'line',
@@ -84,7 +84,7 @@ export default {
         size: 1
       },
       xaxis: {
-        categories: ['01시', '02시', '03시', '04시', '05시', '06시', '07시', '08시', '09시'],
+        categories: ['02시', '03시', '04시', '05시', '06시', '07시', '08시', '09시', '10시', '11시', '12시', '13시'],
         title: {
           text: '시각'
         }
@@ -93,8 +93,8 @@ export default {
         title: {
           text: '온습도'
         },
-        min: 0,
-        max: 50
+        min: -10,
+        max: 60
       },
       legend: {
         position: 'top',
@@ -103,7 +103,7 @@ export default {
         offsetY: -25,
         offsetX: -5
       }
-    }
+    })
 
     // const getData = () => {
     //   series[0].data = [15,22,23,24,25,36,24,28,14]
@@ -116,11 +116,23 @@ export default {
       console.log('온습도 데이터 load')
       axios({
         method: 'get',
-        url: `${baseURL}dashboard/temp/`,
+        url: `${baseURL}dashboard/hourtemp/`,
         headers: {Authorization : `JWT ${token}`},
       })
       .then((res) => {
-        console.log(res)
+        // 초기화
+        
+        options.xaxis.categories = []
+        series[0].data = []
+        series[1].data = []
+        for (const i in res.data){
+          let date = new Date()
+          date.setHours(date.getHours() - i);
+          options.xaxis.categories.push(date.getHours() + '시')
+          series[0].data.push(res.data[i]['temp'])
+          series[1].data.push(res.data[i]['message'])
+        }
+        console.log(options.xaxis.categories)
       })
       .catch((res) => {
         console.log(res)
