@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-uam(c!4fddpxp*^$iuy332r_4nn950ooxy^@*jqbrtxn**z2*-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0', 'websites', 'k6s105.p.ssafy.io', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -36,8 +36,11 @@ INSTALLED_APPS = [
     'faq',
     'notices',
     'qna',
+    'dashboard',
 
     # else
+    'channels',
+    'corsheaders',
     'rest_framework',
     'django_extensions',
     'django.contrib.admin',
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -57,6 +61,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'ssacom.urls'
 
@@ -76,7 +82,19 @@ TEMPLATES = [
     },
 ]
 
+ASGI_APPLICATION = 'ssacom.asgi.application'
 WSGI_APPLICATION = 'ssacom.wsgi.application'
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            # "hosts": [('127.0.0.1', 6379)],
+            # "hosts": [('192.168.0.7', 6379)],
+            "hosts": [('k6s105.p.ssafy.io', 6379)],
+        },
+    },
+}
 
 
 # Database
@@ -95,7 +113,7 @@ DATABASES = {
         'NAME': 'ssacom',
         'USER': 'root',
         'PASSWORD': 'tkvlrnal',
-        'HOST': 'localhost',
+        'HOST': 'k6s105.p.ssafy.io',
         'PORT': '3306'
     }
 }
@@ -117,6 +135,14 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+]
+
+CORS_ALLOWED_ORIGINS = [
+	# 허용할 Origin 추가
+    "http://localhost:8080",
+    "http://127.0.0.1:8000",
+    "http://k6s105.p.ssafy.io:8004"
+
 ]
 
 

@@ -4,14 +4,13 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .serializers import UserSerializer 
+from .serializers import UserSerializer, UserChangeSerailizer
 from .models import User
 
 # 회원 가입
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def signup(request):
-
     password = request.data.get('password')
     password_confirmation = request.data.get('passwordConfirmation')
 		
@@ -38,8 +37,9 @@ def takeUsername(request) :
 @permission_classes([AllowAny])
 def takeUser(request, user_pk) :
     if request.method == 'GET' :
-        user = User.objects.filter(id = user_pk)
-        serializer = UserSerializer(user, many = True)
+        # user = User.objects.filter(id = user_pk)
+        user = get_object_or_404(User, pk=user_pk)
+        serializer = UserSerializer(user)
         return Response(serializer.data)
 
 # @api_view(['POST'])
@@ -79,7 +79,7 @@ def userchange(request,user_pk):
     user = get_object_or_404(User, pk=user_pk)
 
     if request.method == 'PUT' :
-        serializer = UserSerializer(user, data=request.data)
+        serializer = UserChangeSerailizer(user, data=request.data)
         if serializer.is_valid(raise_exception=True) :
             serializer.save()
             return Response(serializer.data)
