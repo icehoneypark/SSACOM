@@ -1,13 +1,17 @@
 <template>
   <div class="notice">
-    <h1>detail page</h1>
+    <h1>> Notice - Detail</h1>
   </div>
-  <div>
-    <button @click="update">수정</button>
-    <button @click="Delete">삭제</button>
+  <div class="container">
+    <p class="title">{{ state.post.title }}</p>
+    <span :v-if="state.post" class="date">{{ state.post.created_at.substr(0, 10)}} {{ state.post.created_at.substr(11, 11)}}</span>
+    <div class="area">
+    <p class="content">{{ state.post.content}}</p>
+    </div>
+    <button class="btn btn-primary" @click="update">수정</button>
+    <button class="btn btn-danger" @click="Delete">삭제</button>
   </div>
-  <p>제목 : {{ state.post.title }}</p>
-  <p>내용 : {{ state.post.content}}</p>
+  
 </template>
 
 <script>
@@ -15,8 +19,8 @@ import axios from 'axios'
 import { useRouter, useRoute } from "vue-router";
 import { onMounted, reactive } from "vue";
 
-const baseURL = 'http://127.0.0.1:8000/'
-// const baseURL = 'http://k6s105.p.ssafy.io:8004/'
+// const baseURL = 'http://127.0.0.1:8000/'
+const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
 export default {
   name : 'NoticeDetail',
@@ -26,7 +30,7 @@ export default {
     const token = localStorage.getItem('jwt')
     const state = reactive({
       id: route.params.id,
-      post: {},
+      post: {'created_at': "11"},
     })
 
     const getpost = () => {
@@ -88,72 +92,47 @@ export default {
     })
     return { state, Delete, update, getpost }
   }
-
-
-
-  // data : function () {
-  //   return {
-  //     id: this.$route.params.id,
-  //     posts: null,
-  //     token : localStorage.getItem('jwt')
-  //   }
-  // },
-  // computed: {
-  //   post : function () {
-  //     return this.posts.find(post => post.id === Number(this.id))
-  //   }
-  // },
-  // methods: {
-  //   Delete: function () {
-  //     axios({
-  //         method: 'delete',
-  //         url: `http://127.0.0.1:8000/notices/${this.id}/`,
-  //         headers: {Authorization : `JWT ${this.token}`},
-  //       })
-  //         .then(res => {
-  //           console.log(res)
-  //           this.$router.push("/notice")
-  //         })
-  //         .catch(err => {
-  //           console.log(err)
-  //         })
-  //   },
-  //   update: function () {
-  //     axios({
-  //       method: 'put',
-  //       url: `http://127.0.0.1:8000/notices/${this.id}/`,
-  //       data: this.post,
-  //       headers: {Authorization : `JWT ${this.token}`},
-  //     })
-  //       .then(res => {
-  //         console.log(res)
-  //         this.$router.push({
-  //       name: 'noticeupdate',
-  //       params: {
-  //         id: this.id,
-  //       }
-  //     })
-  //       })
-
-  //   },
-  //   getpost : function () {
-  //     axios({
-  //       method: 'get',
-  //       url: 'http://127.0.0.1:8000/notices/',
-  //       headers: {Authorization : `JWT ${this.token}`},
-  //     })
-  //       .then(res => {
-  //           console.log(res)
-  //           this.posts = res.data
-  //         })
-  //         .catch(err => {
-  //           console.log(err)
-  //         })
-  //   },
-    
-  // },
-  // created: function () {
-  //   this.getpost()
-  // },
 }
 </script>
+<style lang="scss" scoped>
+ .container{
+   border: 1px solid aliceblue;
+   border-radius: 15px;
+   width: 50em;
+   height: 500px;
+   background-color: aliceblue;
+   padding: 30px;
+   box-shadow: 2px 2px 5px gray;
+ }
+   h1{
+    background-color: #0C4DA2;
+   text-align: left;
+   padding: 20px;
+   padding-left: 150px;
+   margin-bottom: 1em;
+   margin-top: 0;
+   border-bottom: 1px solid gray;
+   color: white;
+   font-size: 23px;
+   border-bottom-right-radius: 40px;
+   margin-right: 20px;
+ }
+ .title {
+   font-size: 25px;
+   font-weight: 600;
+   margin-bottom: 10px;
+ }
+
+ .date {
+   font-size: 13px;
+   color: gray;
+ }
+
+ .area {
+   background-color: white;
+   height: 300px;
+   border-radius: 5px;
+   overflow: auto;
+   padding: 20px;
+ }
+</style>

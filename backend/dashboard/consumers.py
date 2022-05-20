@@ -1,7 +1,10 @@
 # chat/consumers.py
 import json
+import numpy as np
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
+from .serializers import tempSerializer
+from tensorflow.python.keras.models import load_model
 
 class DataConsumer(WebsocketConsumer):
     # 1. self.scope['url_route']['kwargs']['room_name']
@@ -25,7 +28,7 @@ class DataConsumer(WebsocketConsumer):
     #   - 실제로 그룹에 속한 모든 채널에 메시지를 보내는 함수
     #   - 'type'을 이용해서 실제 메시지를 수신했을때의 이벤트 핸들러를 지정해 줄 수 있다.
     #   - 이번 예제에서는 chat_message 함수를 핸들러 함수로 지정하였다.
-
+    
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -47,26 +50,57 @@ class DataConsumer(WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        # data를 json형태로 받아서 메시지 부분을 파싱
+        # data를 딕셔너리로 치환
         text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        temp = text_data_json['temp']
-        print('받은 데이터 :', message, temp)
+
+        if text_data_json['message'] == 'module_data':
+            # 모듈데이터가 들어오면 실행할 코드
+            model = load_model("C:/Users/PC/Desktop/PJT3/S06P31S105/backend/dashboard/test.h5")
+            temp1 = np.array(list(map(int, text_data_json['data'].split())))
+            predict_list = temp1.reshape(1,12,40)
+            predict = model.predict(predict_list)
+            val = 0
+            # que_cnt += 1
+
+            if predict[0][1] > 0.5:
+                val = 1
+            else:
+                val = 0
+            # 재실 데이터 처리후 클라이언트로 전송
+            print('재송신')
+            async_to_sync(self.channel_layer.group_send)(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    # val값에 재실(0 or 1) 넣어서 클라이언트로 다시 전송
+                    'message': val,
+                }
+            )
+        else:
+            message = text_data_json['message']
+            temp = text_data_json['temp']
+            hour = text_data_json['hour']
+            print('받은 데이터 :', message, temp)
+            serializer = tempSerializer(data = text_data_json)
+            if serializer.is_valid(raise_exception=True) and hour == 1 :
+                serializer.save()
         # 데이터 수신만 하면되기 때문에 일단 주석처리
         # async_to_sync(self.channel_layer.group_send)(
         #     self.room_group_name,
         #     {
         #         'type': 'chat_message',
-        #         'message': message
+        #         'message': message,
+        #         'temp': temp
         #     }
         # )
+        
+        
 
     # Receive message from room group
     def chat_message(self, event):
-        print('여기는 chat_message')
         message = event['message']
-        print('r data :', message)
         # Send message to WebSocket
         self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            # 'temp' : event['temp']
         }))
