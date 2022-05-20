@@ -74,7 +74,7 @@ export default {
     // position: fixed;
     width: 100%;
     padding: 30px;
-    border-right: 1px solid gray;
+    // border-right: 1px solid gray;
     height: 100%;
     background-color: #0C4DA2;
     overflow: auto;
