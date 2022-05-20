@@ -1,7 +1,7 @@
 from django.db import models
 from django.conf import settings
 
-class temp(models.Model) :
+class Temp(models.Model) :
 
     temp = models.TextField()
     message = models.TextField()

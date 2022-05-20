@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import temp
+from .models import Temp
 
 class tempSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = temp
+        model = Temp
         fields = ('temp', 'message','created_at','hour')
