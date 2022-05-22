@@ -1,9 +1,18 @@
 <template>
   <div>
     <div class="wrapper">
-      <h5>재실 데이터 측정</h5>
-      <img v-if="state.result <= 0.5" src="../../assets/bus_no.png" width="250" alt="">
-      <img v-if="state.result > 0.5" src="../../assets/bus_yes.png" width="250" alt="">
+      <span id="title">재실 데이터 측정 </span>
+      <select @change="imageChange" name="" id="select-mode">
+        <option value='0'>버스</option>
+        <option value='1'>화장실</option>
+        <option value='2'>노인</option>
+        <option value='3'>아기</option>
+        <option value='4'>탈의실</option>
+        <option value='5'>격리</option>
+      </select>
+      <br>
+      <img v-if="state.result <= 0.5" :src="state.imagePathNo" width="250" height="250" alt="">
+      <img v-if="state.result > 0.5" :src="state.imagePathYes" width="250" height="250" alt="">
 
       <span class="text">버스의 색깔을 통해 내부 재실 정보를 알 수 있습니다. 빨간 버스가 재실 중임을 나타냅니다.</span>
     </div>
@@ -32,6 +41,9 @@ export default {
     const state = reactive({
       isPerson: [],
       result: 0,
+      imagePathNo: require("../../assets/bus_no.png"),
+      imagePathYes: ""
+      
     })
     
     const series = reactive([
@@ -110,6 +122,32 @@ export default {
     //   // series[0].data = [state.data1]
     //   // console.log(series[0].data)
     // }
+    const imageChange = () => {
+      const select = document.getElementById("select-mode")
+      const selectVal = select.options[select.selectedIndex].value
+      if (selectVal === '0'){
+        state.imagePathNo = require(`../../assets/bus_no.png`)
+        state.imagePathYes = require(`../../assets/bus_yes.png`)
+      }else if (selectVal === '1'){
+        state.imagePathNo = require('../../assets/toilet_no.png')
+        state.imagePathYes = require(`../../assets/toilet_yes.png`)
+      }else if (selectVal === '2'){
+        state.imagePathNo = require(`../../assets/old_no.png`)
+        state.imagePathYes = require(`../../assets/old_yes.png`)
+      }else if (selectVal === '3'){
+        state.imagePathNo = require(`../../assets/baby_no.png`)
+        state.imagePathYes = require(`../../assets/baby_yes.png`)
+      }else if (selectVal === '4'){
+        state.imagePathNo = require(`../../assets/dressroom_no.png`)
+        state.imagePathYes = require(`../../assets/dressroom_yes.png`)
+      }
+      else if (selectVal === '5'){
+        state.imagePathNo = require(`../../assets/isolation_no.png`)
+        state.imagePathYes = require(`../../assets/isolation_yes.png`)
+      }
+
+      // 노인아이콘, 탈의실아이콘, 아기아이콘, 격리아이콘/병원아이콘
+    }
 
     const getTemp = () => {
       const token = localStorage.getItem('jwt')
@@ -173,13 +211,13 @@ export default {
           
           
 
-    return {options, series, state}
+    return {options, series, state, imageChange}
   }
 }
 </script>
 
 <style scoped>
-h5 {
+#title {
   font-weight: 900;
 
 }

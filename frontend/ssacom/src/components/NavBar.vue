@@ -20,7 +20,7 @@
       <router-link to="/login"><div class="nav_link"><i class="fa-solid fa-key"></i><span> 로그인</span></div></router-link>
       <router-link to="/signup"><div class="nav_link"><i class="fa-solid fa-user-plus"></i><span>회원가입</span></div></router-link>
     </ul>
-    <ul class="user">
+    <ul v-if="isLogin" class="user">
       <a href="" @click="logout"><div class="nav_link"><i class="fa-solid fa-right-to-bracket"></i> <span>logout</span></div></a>
     </ul>
   </nav>
