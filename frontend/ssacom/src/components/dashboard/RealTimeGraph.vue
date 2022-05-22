@@ -29,7 +29,7 @@ import { onMounted, onUnmounted } from '@vue/runtime-core'
 // const baseURL = 'http://127.0.0.1:8000/'
 const baseURL = 'http://k6s105.p.ssafy.io:8004/'
 
-const websocket = new WebSocket("ws://localhost:8000/ws/data/");
+const websocket = new WebSocket("ws://k6s105.p.ssafy.io:8004/ws/data/");
 
 
 export default {
